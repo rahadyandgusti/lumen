@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col s12">
         @if ($data->image_header)
-            <img src="{!! \ImageHelper::getContentHeader($data->image_header) !!}"/>
+            <img src="{!! \ImageHelper::getContentHeader($data->image_header) !!}" class="col s12" />
             @if(\Auth::user() && $data->created_id == \Auth::user()->id)
             <a href="{{ route('page.edit', $data->id) }}" class="btn-floating red accent-2 right">
                 <i class="material-icons right">edit</i>
