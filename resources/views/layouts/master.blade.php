@@ -21,12 +21,15 @@
 		<nav>
 			<div class="container nav-wrapper">
 				<a href="{{ route('home') }}" class="brand-logo">Logo</a>
-				<ul class="right hide-on-med-and-down">
+				<ul class="right">
 				@guest
 					<li><a href="{{ url('login') }}">login</a></li>
 				@else
 					<li><a class="dropdown-button" href="#!" data-activates="profile">
-						{{ \Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i>
+						<i class="material-icons left">face</i>
+						<span class="hide-on-med-and-down">
+							{{ \Auth::user()->name }}
+						</span>
 					</a></li>
 				@endguest
 				</ul>
