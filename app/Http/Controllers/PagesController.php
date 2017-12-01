@@ -65,6 +65,8 @@ class PagesController extends Controller
             $req['image_header'] = $filename;
         }
 
+        $req['slug'] = str_slug(str_limit(strip_tags($request->title), 100));
+
         $req['created_id'] = \Auth::user()->id;
         $req['updated_id'] = \Auth::user()->id;
         
@@ -94,7 +96,7 @@ class PagesController extends Controller
      */
     public function show($id)
     {
-    	$data = $this->model->find($id);
+    	$data = $this->model->where('slug',$id)->first();
 
         return view($this->folder . '.show', [
             'title' => $this->title,
@@ -146,6 +148,8 @@ class PagesController extends Controller
             $req['image_header'] = $filename;
         }
 
+        $req['slug'] = str_slug(str_limit(strip_tags($request->title), 100));
+
         $req['updated_id'] = \Auth::user()->id;
         
         $result = $this->model->find($id)
@@ -154,7 +158,7 @@ class PagesController extends Controller
         if ($result) {
             return [
             	'respond' => true,
-            	'id' => $id
+            	'id' => $req['slug']
             ];
         }
 

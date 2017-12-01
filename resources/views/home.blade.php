@@ -24,7 +24,7 @@
 			      		<img src="{{ $d->image_header? \ImageHelper::getContentHeaderThumb($d->image_header): 'default-image.jpg' }}" alt="" class="responsive-img materialboxed">
 			      	</div>
 			    	<div class="col s8">
-				      	<a href="{{ url('page/'.$d->id) }}">
+				      	<a href="{{ url('page/'.$d->slug) }}">
 				      		<h5 class="title no-margin">{{ str_limit(strip_tags($d->title),45,'...') }}</h5>
 				      	</a>
 				      	<p>{{ str_limit(strip_tags($d->content), 70, '...') }}</p>

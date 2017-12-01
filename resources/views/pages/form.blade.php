@@ -12,7 +12,7 @@
     .btn-float {
         position: absolute;
     }
-    #content, #title {
+    #content, #title h3 {
         padding: 5px;
     }
 </style>
@@ -50,12 +50,14 @@
         </div>
         </div>
         <div class="col s12">
-            <div id="title" contenteditable=true>
+            <div id="title">
+                <h3 contenteditable=true id="title-form">
             @if(isset($data))
-                {!! $data->title. $data->image_header !!}
+                {{ title_case($data->title) }}
             @else
-                <h3>This is sample title. Click Here...</h3>
+                This is sample title. Click Here...
             @endif
+                </h3>
             </div>
         </div>
         <div class="col s12">
@@ -117,7 +119,6 @@
         $('#image-preview')
             .css('height',($('#image-preview').width()*325)/945);
         var imageData = cropper.getImageData();
-        console.log({left:0, top:0, width:image.width, height:image.height});
         // cropper.setCropBoxData({left:0, top:0, width:image.width, height:image.height});
         @endif
     });
@@ -184,7 +185,7 @@
     $(document).on('click', '.btn-save', function(){
         var token = $('meta[name=csrf-token]').attr('content');
         var content = $('#content').html();
-        var title = $('#title').html();
+        var title = $('#title-form').html().toLowerCase();
         var image = statusHeader? cropper.getCroppedCanvas().toDataURL('image/jpeg'): '';
         var url = '{{ $urlForm }}';
         var message = 'Are you sure to save this?';
@@ -199,6 +200,7 @@
             method = "PUT";
             label = "Update it!";
         @endif
+        var id;
         swal({
             title: message,
             type: 'warning',
@@ -213,6 +215,7 @@
                         data: { _token: token, content: content, _method: method, title: title, image_header: image},
                         success: function (result) {
                             if(result.respond) {
+                                id = result.id;
                                 resolve();
                             } else {
                                 if(result.message){
@@ -238,7 +241,7 @@
                   type: 'success',
                   confirmButtonText: 'Ok'
                 }).then(function (result) {
-                    // window.location = "";
+                    window.location = "{{url('page')}}/"+id;
                 })
             }
         })
@@ -248,15 +251,6 @@
     var content = document.getElementById( 'content' );
         // title.setAttribute( 'contenteditable', true );
         content.setAttribute( 'contenteditable', true );
-
-    // CKEDITOR.inline( 'title', {
-    //     // Allow some non-standard markup that we used in the introduction.
-    //     // extraAllowedContent: 'a(documentation);abbr[title];code',
-    //     removePlugins: 'stylescombo',
-    //     // extraPlugins: 'sourcedialog',
-    //     // Show toolbar on startup (optional).
-    //     // startupFocus: true
-    // } );
 
     CKEDITOR.inline( 'content', {
         // Allow some non-standard markup that we used in the introduction.

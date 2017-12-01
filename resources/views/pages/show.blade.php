@@ -28,7 +28,11 @@
         @endif
         </div>
         <div class="col s12">
-            <div id="title">{!! $data->title !!}</div>
+            <div id="title">
+                <h3>
+                {{ title_case($data->title) }}
+                </h3>
+            </div>
         </div>
         <div class="col s12">
             <span class="grey-text">
