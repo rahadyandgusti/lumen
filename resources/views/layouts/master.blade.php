@@ -15,10 +15,18 @@
     <link rel="stylesheet" href="{!! asset('plugin/sweet-alert/sweetalert.css') !!}"/>
     <!-- Styles -->
     @yield('styles')
+    <style type="text/css">
+    .no-margin {
+    	margin: 0 !important;
+    }
+    .no-padding {
+    	padding: 0 !important;
+    }
+    </style>
 </head>
 <body>
 	<div class="navbar-fixed">
-		<nav>
+		<nav class="blue lighten-1">
 			<div class="container nav-wrapper">
 				<a href="{{ route('home') }}" class="brand-logo">Logo</a>
 				<ul class="right">
@@ -102,6 +110,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".dropdown-button").dropdown();
+    	$('.materialboxed').materialbox();
 	});
 </script>
 @yield('scripts')

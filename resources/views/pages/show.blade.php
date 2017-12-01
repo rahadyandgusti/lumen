@@ -1,20 +1,30 @@
 @extends('layouts.master')
 
 @section('styles')
+<style type="text/css">
+    .btn-edit {
+        position: absolute;
+    }
+    #content, #title {
+        padding: 5px;
+    }
+</style>
 @stop
 
 @section('content')
 <div class="container">
     <br>
     <div class="row">
+        @if(\Auth::user() && $data->created_id == \Auth::user()->id)
+        <a href="{{ route('page.edit', $data->id) }}" class="btn-floating cyan pulse btn-edit">
+            <i class="material-icons right">edit</i>
+        </a>
+        @endif
         <div class="col s12">
         @if ($data->image_header)
-            <img src="{!! \ImageHelper::getContentHeader($data->image_header) !!}" class="col s12" />
-            @if(\Auth::user() && $data->created_id == \Auth::user()->id)
-            <a href="{{ route('page.edit', $data->id) }}" class="btn-floating red accent-2 right">
-                <i class="material-icons right">edit</i>
-            </a>
-            @endif
+            <div id="image-preview">
+                <img src="{!! \ImageHelper::getContentHeader($data->image_header) !!}" class="col s12 materialboxed" />
+            </div>
         @endif
         </div>
         <div class="col s12">
@@ -22,19 +32,12 @@
         </div>
         <div class="col s12">
             <span class="grey-text">
-                Created by {{ $data->createduser->name }} at {{ \Carbon\Carbon::parse($data->created_at)->format('d M Y H:i') }}
-                    @if (
-                        $data->updateduser && 
-                        ($data->updateduser->id != $data->createduser->id || $data->created_at != $data->updated_at)
-                    )
-                    and updated
-                    @if ($data->updateduser->id != $data->createduser->id)
-                    by {{ $data->updateduser->name }} 
-                    @endif
-                    @if ($data->created_at != $data->updated_at)
-                    at {{  \Carbon\Carbon::parse($data->updated_at)->format('d M Y H:i') }}
-                    @endif
-                @endif
+                <i class="material-icons tiny">face</i> {{ $data->createduser->name }} 
+                <i class="material-icons tiny">access_time</i> 
+                    {{ ($data->updateduser)?
+                        \Carbon\Carbon::parse($data->updated_at)->format('d M Y H:i'):
+                        \Carbon\Carbon::parse($data->created_at)->format('d M Y H:i') 
+                    }}
             </span>
         </div>
         <div class="col s12">

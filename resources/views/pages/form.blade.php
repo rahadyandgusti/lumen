@@ -9,6 +9,12 @@
         height: 325px;*/
         overflow: hidden;
     }
+    .btn-float {
+        position: absolute;
+    }
+    #content, #title {
+        padding: 5px;
+    }
 </style>
 @stop
 
@@ -16,20 +22,18 @@
 <div class="container">
     <br>
     <div class="row">
-        <div class="col s12">
-            <button class="btn-floating scale-transition
+            <button class="btn-floating scale-transition btn-float
                 {{ isset($data) && $data->image_header?'scale-out':'scale-in right' }} btn-header-image"
                 onclick="toggleHeader('image')"
             >
                 <i class="material-icons">image</i>
             </button>
-            <button class="btn-floating scale-transition 
+            <button class="btn-floating scale-transition btn-float red
                 {{ isset($data) && $data->image_header?'scale-in right':'scale-out' }} btn-header-close" 
                 onclick="toggleHeader('close')"
             >
                 <i class="material-icons">close</i>
             </button>
-        </div>
         <div id="image-section" style="display: {{ isset($data) && $data->image_header?'':'none' }}" onmouseover="toggleBtn('#btn-upload','over')" onmouseleave="toggleBtn('#btn-upload','leave')">
         <div class="col s12">
             <div id="image-preview"></div>
@@ -56,16 +60,9 @@
         </div>
         <div class="col s12">
             <span class="grey-text">
-                Created by {{ isset($data)? $data->createduser->name: \Auth::user()->name }} at {{ isset($data)? \Carbon\Carbon::parse($data->created_at)->format('d M Y H:i'): \Carbon\Carbon::now()->format('d M Y H:i') }}
-                @if(isset($data) && $data->updateduser && ($data->updateduser->id != $data->createduser->id || $data->created_at != $data->updated_at))
-                and updated 
-                @if ($data->updateduser->id != $data->createduser->id)
-                by {{ isset($data)? $data->updateduser->name: \Auth::user()->name }} 
-                @endif
-                @if ($data->created_at != $data->updated_at)
-                at {{  \Carbon\Carbon::parse($data->updated_at)->format('d M Y H:i') }}
-                @endif
-                @endif
+                <i class="material-icons tiny">face</i> {{ isset($data)? $data->createduser->name: \Auth::user()->name }} 
+                <i class="material-icons tiny">access_time</i> 
+                    {{ \Carbon\Carbon::now()->format('d M Y H:i')}}
             </span>
         </div>
         <div class="col s12">
