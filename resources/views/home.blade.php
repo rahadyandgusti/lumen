@@ -6,13 +6,6 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="input-field col s12">
-			<i class="material-icons prefix">search</i>
-			<input id="icon_prefix" type="text" class="validate">
-			<label for="icon_prefix">Search</label>
-        </div>
-    </div>
-    <div class="row">
     	@if ($new)
     	<div class="col m6 s12">
     		<h3>New Data Added</h3>
