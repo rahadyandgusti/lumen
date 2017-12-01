@@ -52,7 +52,7 @@
         <div class="col s12">
             <div id="title" contenteditable=true>
             @if(isset($data))
-                {!! $data->title !!}
+                {!! $data->title. $data->image_header !!}
             @else
                 <h3>This is sample title. Click Here...</h3>
             @endif
@@ -95,7 +95,16 @@
     var option = {
                     aspectRatio: 945 / 325,
                     viewMode: 2,
-                    preview: imagePreview
+                    preview: imagePreview,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    modal: false,
+                    guides: false,
+                    highlight: false,
+                    // cropBoxMovable: false,
+                    // cropBoxResizable: false,
+                    toggleDragModeOnDblclick: false,
                 };
     var cropper;
 
@@ -107,9 +116,9 @@
         cropper = new Cropper(image, option);
         $('#image-preview')
             .css('height',($('#image-preview').width()*325)/945);
-            console.log('"width":'+image.width+', "height":'+image.height)
-        var imageData = cropper.cropper('getImageData');
-        cropper.cropper('setCropBoxData', {left:0, top:0, width:imageData.width, height:imageData.height});
+        var imageData = cropper.getImageData();
+        console.log({left:0, top:0, width:image.width, height:image.height});
+        // cropper.setCropBoxData({left:0, top:0, width:image.width, height:image.height});
         @endif
     });
 

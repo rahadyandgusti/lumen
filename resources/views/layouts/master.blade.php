@@ -22,6 +22,15 @@
     .no-padding {
     	padding: 0 !important;
     }
+    #topbarsearch .input-field .prefix { 
+        width:0rem !important;    
+        }        
+    #topbarsearch nav ul li:hover, nav ul li.active {
+            background-color: none !important;
+        }
+    .input-field .prefix ~ input, .input-field .prefix ~ textarea, .input-field .prefix ~ label, .input-field .prefix ~ .validate ~ label, .input-field .prefix ~ .autocomplete-content{
+        margin-left: 1rem !important;
+        }
     </style>
 </head>
 <body>
@@ -29,10 +38,23 @@
 		<nav class="blue lighten-1">
 			<div class="container nav-wrapper">
 				<a href="{{ route('home') }}" class="brand-logo">Logo</a>
+
 				<ul class="right">
 				@guest
 					<li><a href="{{ url('login') }}">login</a></li>
 				@else
+					<li>
+						<div class="center row">
+                          <div class="col s12 " >
+                            <div class="row" id="topbarsearch">
+                              <div class="input-field col s6 s12 white-text">
+                                <i class="white-text material-icons prefix">search</i>
+                                <input type="text" placeholder="search" id="autocomplete-input" class="autocomplete white-text" >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+					</li>
 					<li><a class="dropdown-button" href="#!" data-activates="profile">
 						<i class="material-icons left">face</i>
 						<span class="hide-on-med-and-down">
