@@ -267,7 +267,7 @@
         var status = $('#status').val();
         var content = $('#content').html();
         var title = strip($('#title-form').html().toLowerCase());
-        var image = statusHeader? cropper.getCroppedCanvas().toDataURL('image/jpeg'): '';
+        var image = statusHeader? cropper.cropper('getCroppedCanvas').toDataURL('image/jpeg'): '';
         var url = '{{ $urlForm }}';
         var message = 'Are you sure to save this?';
         var messageFail = "Create data failed";
