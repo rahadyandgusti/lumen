@@ -25,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data['new'] = $this->model->orderBy('id','desc')->get()->take(6);
+        $data['new'] = $this->model
+                        // ->where('status', 'publish')
+                        ->orderBy('id','desc')->get()->take(6);
 
         return view('home',$data);
     }

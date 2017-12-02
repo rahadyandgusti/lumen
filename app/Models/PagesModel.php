@@ -19,10 +19,17 @@ class PagesModel extends Model
         );
     } 
 
-	public function updateduser() {
+    public function updateduser() {
         return $this->hasOne(
             'App\Models\UsersModel', 
             'id', 'updated_id'
+        );
+    } 
+
+	public function tags() {
+        return $this->hasMany(
+            'App\Models\TagPagesModel', 
+            'page_id', 'id'
         );
     } 
 }

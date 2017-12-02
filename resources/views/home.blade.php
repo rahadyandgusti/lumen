@@ -13,12 +13,16 @@
     	@foreach ($new as $d)
 			    <li class="collection-item">
 			    	<div class="row no-margin">
+			    	@if($d->image_header)
 			    	<div class="col s3 no-padding">
-			      		<img src="{{ $d->image_header? \ImageHelper::getContentHeaderThumb($d->image_header): 'default-image.jpg' }}" alt="" class="responsive-img materialboxed">
+			      		<img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
 			      	</div>
 			    	<div class="col s8">
+			    	@else
+			    	<div class="col s12">
+			    	@endif
 				      	<a href="{{ url('page/'.$d->slug) }}">
-				      		<h5 class="title no-margin">{{ str_limit(strip_tags($d->title),45,'...') }}</h5>
+				      		<h5 class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),45,'...')) }}</h5>
 				      	</a>
 				      	<p>{{ str_limit(strip_tags($d->content), 70, '...') }}</p>
 			      	</div>

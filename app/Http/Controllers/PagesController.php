@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as RequestDefault;
 use App\Models\PagesModel;
+use App\Models\TagPagesModel;
+use App\Models\TagsModel;
+use App\Http\Requests\PagesRequest as Request;
 
 class PagesController extends Controller
 {
@@ -12,9 +15,11 @@ class PagesController extends Controller
     protected $folder = "pages";
     protected $form;
 
-    public function __construct(PagesModel $model)
+    public function __construct(PagesModel $model,TagPagesModel $tagPageModel,TagsModel $tagModel)
     {
         $this->model = $model;
+        $this->tagPageModel = $tagPageModel;
+        $this->tagModel = $tagModel;
         // $this->form     = CategoryWisataForm::class;
     }
     /**
@@ -52,7 +57,7 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        $req = $request->all();
+        $req = $request->except('tags');
 
         if($req['image_header']){
             $image = \Image::make($request->image_header)->resize(945,325);
@@ -69,16 +74,48 @@ class PagesController extends Controller
 
         $req['created_id'] = \Auth::user()->id;
         $req['updated_id'] = \Auth::user()->id;
-        
+
+        $validator = \Validator::make($req, [
+            'slug' => 'required|unique:pages,slug',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'respond' => false,
+                'message' => 'Title already in database'
+            ];
+        }
         $result = $this->model
                     ->create($req);
+
+        foreach ($request->tags as $key => $value) {
+            if (is_numeric($value)) {
+                $inputId = $value;
+            } else {
+                $inputId = 0;
+                $checkId = $this->tagModel->select('id')
+                            ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                if (count($checkId)) {
+                    $inputId = $checkId;
+                } else {
+                    $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
+                    $inputId = $tmpInputTag->id;
+                }
+
+            }
+            $this->tagPageModel->create([
+                'page_id' => $result->id,
+                'tag_id' => $inputId
+            ]);
+        }
+        
 
         $id = $result->id;
 
         if ($result) {
             return [
             	'respond' => true,
-            	'id' => $id
+            	'id' => $req['slug']
             ];
         }
 
@@ -94,10 +131,9 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-    	$data = $this->model->where('slug',$id)->first();
-
+    	$data = $this->model->with('tags.tag:id,name')->where('slug',$slug)->first();
         return view($this->folder . '.show', [
             'title' => $this->title,
             'url' => $this->url,
@@ -113,7 +149,7 @@ class PagesController extends Controller
      */
     public function edit( $id)
     {
-        $data = $this->model->find($id);
+        $data = $this->model->with('tags.tag:id,name')->find($id);
 
         return view($this->folder . '.form', [
             'title' => $this->title,
@@ -132,11 +168,12 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $req = $request->all();
+        $req = $request->except('tags');
 
         if($req['image_header']){
             $img = $this->model->find($id)->image_header;
-            if (file_exists(public_path()."/".$img)) unlink($img);
+            if (file_exists(public_path()."/content/header/".$img)) unlink(public_path()."/content/header/".$img);
+            if (file_exists(public_path()."/content/header-thumb/".$img)) unlink(public_path()."/content/header-thumb/".$img);
 
             $image = \Image::make($request->image_header)->resize(945,325);
             $filename = md5($request->image_header.time()).'.jpg';
@@ -151,9 +188,56 @@ class PagesController extends Controller
         $req['slug'] = str_slug(str_limit(strip_tags($request->title), 100));
 
         $req['updated_id'] = \Auth::user()->id;
+
+        $validator = \Validator::make($req, [
+            'slug' => 'required|unique:pages,slug,'.$id,
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('post/create')
+                        ->withErrors([
+                            'title' => 'Title already in database'
+                        ])
+                        ->withInput();
+        }
         
         $result = $this->model->find($id)
                     ->update($req);
+
+        $notDelId = [];
+
+        foreach ($request->tags as $key => $value) {
+            $inputId = 0;
+            if (is_numeric($value)) {
+                $inputId = $value;
+            } else {
+                $checkId = $this->tagModel->select('id')
+                            ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                if (count($checkId)) {
+                    $inputId = $checkId;
+                } else {
+                    $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
+                    $inputId = $tmpInputTag->id;
+                }
+
+            }
+            $checkData = $this->tagPageModel->select('id')
+                        ->where('page_id',$id)
+                        ->where('tag_id',$inputId)
+                        ->first();
+            if (count($checkData) == 0) {
+                $r = $this->tagPageModel->create([
+                    'page_id' => $id,
+                    'tag_id' => $inputId
+                ]);
+                $notDelId[] = $r->id;
+            } else {
+                $notDelId[] = $checkData->id;
+            }
+        }
+
+        $this->tagPageModel->whereNotIn('id',$notDelId)->delete();
+        
 
         if ($result) {
             return [
@@ -176,13 +260,23 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        // $result = $this->model->find($id)->delete();
+        $result = $this->model->find($id)->delete();
 
-        // if ($result) {
-        //     return ['respond' => true, 'message' => 'Successfully deleted'];
-        // }
+        if ($result) {
+            return ['respond' => true, 'message' => 'Successfully deleted'];
+        }
 
-        // return ['respond' => false, 'message' => 'Failed to delete'];
+        return ['respond' => false, 'message' => 'Failed to delete'];
         return '';
+    }
+
+    public function search(RequestDefault $request) {
+        $search = $this->model->search($request->get('search'))->get()->toArray();
+        return $search;
+    }
+
+    public function testsearch() {
+        $search = $this->model->search('a')->get()->toArray();
+        return $search;
     }
 }

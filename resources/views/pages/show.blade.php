@@ -50,7 +50,11 @@
     </div>
     <div class="row">
         <div class="col m12">
-            
+            @if (count($data->tags))
+            @foreach ($data->tags as $tag)
+            <button class="waves-effect waves-teal btn-flat">{{$tag->tag->name}}</button>
+            @endforeach
+            @endif
         </div>
     </div>
 </div>

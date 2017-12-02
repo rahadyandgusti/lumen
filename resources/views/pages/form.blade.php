@@ -3,6 +3,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugin/ckeditor/skins/moono-lisa/editor.css') }}">
 <link rel="stylesheet" href="{{ asset('plugin/cropperjs/dist/cropper.min.css') }}">
+<link href="{{ asset('plugin/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
 <style type="text/css">
     #image-preview {
         /*width: 942px;
@@ -23,13 +24,13 @@
     <br>
     <div class="row">
             <button class="btn-floating scale-transition btn-float
-                {{ isset($data) && $data->image_header?'scale-out':'scale-in right' }} btn-header-image"
+                {{ isset($data)?($data->image_header?'scale-out':'scale-in right'):'scale-in right' }} btn-header-image"
                 onclick="toggleHeader('image')"
             >
                 <i class="material-icons">image</i>
             </button>
             <button class="btn-floating scale-transition btn-float red
-                {{ isset($data) && $data->image_header?'scale-in right':'scale-out' }} btn-header-close" 
+                {{ isset($data)?($data->image_header?'scale-in right':'scale-out'):'scale-out' }} btn-header-close" 
                 onclick="toggleHeader('close')"
             >
                 <i class="material-icons">close</i>
@@ -40,7 +41,7 @@
         </div>
         <div class="col m6">
             <img id="image" 
-                src="{{ isset($data) && $data->image_header? \ImageHelper::getContentHeader($data->image_header):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg' }}" 
+                src="{{ isset($data)?( $data->image_header? \ImageHelper::getContentHeader($data->image_header):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg'):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg' }}" 
                 style="max-width: 100%"
             >
             <input type="file" id="image-upload" style="display: none">
@@ -79,8 +80,34 @@
         </div>
     </div>
     <div class="row">
-        <div class="col m12">
-            <a href="{{ route('home') }}" class="btn red accent-2"><i class="material-icons left">arrow_back</i> Back</a>
+        <div class="col s12 m4 l3">
+            <div class="input-field">
+                <select id="status" class="select_material" 
+                    value="{{isset($data)?$data->status:''}}"
+                >
+                    <option value="draft">Draft</option>
+                    <option value="publish">Publish</option>
+                    <option value="hidden">Hidden</option>
+                </select>
+                <label>Status</label>
+            </div>
+        </div>
+        <div class="col s12 m8 l9">
+                <label>Tags</label>
+                <select id="tags" class="browser-default" multiple="multiple">
+                @if(isset($data))
+                    @foreach($data->tags as $tag)
+                    <option value="{{$tag->tag_id}}" selected="selected">{{$tag->tag->name}}</option>
+                    @endforeach
+                @endif
+                </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <button class="btn btn-delete red right"><i class="material-icons left">delete</i> Delete</button>
+
+            <a href="{{ route('home') }}" class="btn orange accent-2"><i class="material-icons left">arrow_back</i> Back</a>
             <button class="btn btn-save">Save<i class="material-icons right">send</i></button>
         </div>
     </div>
@@ -88,6 +115,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('plugin/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('plugin/cropperjs/dist/cropper.min.js') }}"></script>
 <script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript">
@@ -121,6 +149,41 @@
         var imageData = cropper.getImageData();
         // cropper.setCropBoxData({left:0, top:0, width:image.width, height:image.height});
         @endif
+        $("#tags").select2({
+            tags: true,
+            tokenSeparators: [',', ' '],
+            createTag: function (params) {
+                var term = $.trim(params.term);
+
+                if (term === '') {
+                  return null;
+                }
+
+                return {
+                  id: term,
+                  text: term,
+                  newTag: true // add additional parameters
+                }
+            },
+            ajax: {
+                url: '{{ route("tag.get") }}',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function (data) {
+                    // Tranforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.data
+                    };
+                }
+            }
+        })
     });
 
     $(document).on('click', '#btn-upload', function(e){
@@ -184,6 +247,8 @@
     
     $(document).on('click', '.btn-save', function(){
         var token = $('meta[name=csrf-token]').attr('content');
+        var tags = $('#tags').val();
+        var status = $('#status').val();
         var content = $('#content').html();
         var title = $('#title-form').html().toLowerCase();
         var image = statusHeader? cropper.getCroppedCanvas().toDataURL('image/jpeg'): '';
@@ -212,7 +277,7 @@
                     $.ajax({
                         url: url,
                         type: 'post',
-                        data: { _token: token, content: content, _method: method, title: title, image_header: image},
+                        data: { _token: token, content: content, _method: method, title: title, image_header: image, status: status, tags: tags},
                         success: function (result) {
                             if(result.respond) {
                                 id = result.id;
@@ -222,12 +287,20 @@
                                     swal.showValidationError(
                                         result.message
                                     );
+                                    resolve();
                                 } else {
                                     swal.showValidationError(
                                         messageFail
                                     );
+                                    resolve();
                                 }
                             }
+                        },
+                        error: function($error) {
+                            swal.showValidationError(
+                                messageFail
+                            );
+                            resolve();
                         }
                     });
                 })
@@ -246,7 +319,67 @@
             }
         })
     });
-
+    $(document).on('click', '.btn-delete', function(){
+    @if(isset($data))
+        var token = $('meta[name=csrf-token]').attr('content');
+        var url = '{{ route("page.destroy",$data->id) }}';
+        var message = 'Are you sure to DELETE this?';
+        var messageFail = "Delete data failed";
+        var messageSucc = "Delete data success";
+        var method = "DELETE";
+        var label = "Delete it!";
+        swal({
+            title: message,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: label,
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return new Promise(function (resolve) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        context: {},
+                        data: { _token: token, _method: method},
+                        success: function (result) {
+                            console.log(result);
+                            if(result.respond) {
+                                resolve();
+                            } else {
+                                if(result.message){
+                                    swal.showValidationError(
+                                        result.message
+                                    );
+                                } else {
+                                    swal.showValidationError(
+                                        messageFail
+                                    );
+                                }
+                            }
+                        },
+                        error: function($error) {
+                            swal.showValidationError(
+                                messageFail
+                            );
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (result) {
+            if (result.value) {
+                swal({
+                  title: 'Yeayy..',
+                  text: messageSucc,
+                  type: 'success',
+                  confirmButtonText: 'Ok'
+                }).then(function (result) {
+                    window.location = "{{route('home')}}";
+                })
+            }
+        })
+    @endif
+    });
     var title = document.getElementById( 'title' );
     var content = document.getElementById( 'content' );
         // title.setAttribute( 'contenteditable', true );
