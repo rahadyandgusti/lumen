@@ -44,7 +44,7 @@
 @section('content')
 <section class="head">
     <div class="container">
-        <div class="row">
+        <div class="row no-margin">
           <div class="col s12">
           </div>
         </div>
@@ -79,9 +79,9 @@
         </div>
     </div>
 </section>
-<section class="head custom-grey custom-border-top">
+<section class="content custom-grey custom-border-top">
     <div class="container">
-        <div class="row">
+        <div class="row no-margin">
             <div id="add-data" class="col s9">
                 <div class="row">
                     <div class="col s12">

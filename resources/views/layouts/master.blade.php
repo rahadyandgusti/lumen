@@ -97,7 +97,9 @@
 		</ul>
 		@endguest
 	</div>
-	@yield('content')
+	<div class="content-wrap">
+		@yield('content')
+	</div>
 	<div class="fixed-action-btn">
 	    <a class="btn-floating btn-large red">
 	      	<i class="large material-icons">menu</i>
@@ -156,15 +158,15 @@
 					<h5 class="white-text">About</h5>
 					<p class="grey-text text-lighten-4">ini hanya web catatan kecil <i>coding</i>. karena <i>developer</i> adalah seorang <i>programmer</i> yang sering lupa akan hal-hal kecil yang biasanya sangat penting. daripada mencari dari awal masih mending ditulis aja. Hahahaha...</p>
 				</div>
-				<div class="col l4 offset-l2 s12">
+				<!-- <div class="col l4 offset-l2 s12">
 					<h5 class="white-text">Links</h5>
 					<ul>
 					  <li><a class="grey-text text-lighten-3" href="{{route('home')}}">Home</a></li>
-					  <!-- <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+					  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
 					  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-					  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li> -->
+					  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
 					</ul>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="footer-copyright">
@@ -199,7 +201,9 @@ crossorigin="anonymous"></script>
 		// 	"Google": null,
 		// 	"Gargle":null
 		// 	}
-		// });                
+		// });       
+		var height = $(window).height() - ($('.navbar-fixed').outerHeight() + $('footer').outerHeight() + $('section.head').outerHeight() + 20);
+		$('section.content').css('min-height', height);
 	});
 </script>
 @yield('scripts')
