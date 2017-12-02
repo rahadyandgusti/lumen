@@ -50,10 +50,6 @@
         </div>
         <div class="row">
             <div class="col m6 hide-on-small-only">
-                <ul class="tabs">
-                    <li class="tab col s6"><a class="active black-text waves-effect waves-green" href="#add-data">New Data Added</a></li>
-                    <li class="tab col s6"><a class="black-text waves-effect waves-green" href="#view-data">Most Viewed</a></li>
-                </ul>
             </div>
             <div class="col s12 m6">
               <div class="row no-margin">
@@ -70,12 +66,6 @@
                   </div>
               </div>
             </div>
-            <div class="col s12 hide-on-med-and-up">
-                <ul class="tabs">
-                    <li class="tab col s6"><a class="active black-text waves-effect waves-green" href="#add-data">New Data Added</a></li>
-                    <li class="tab col s6"><a class="black-text waves-effect waves-green" href="#view-data">Most Viewed</a></li>
-                </ul>
-            </div>
         </div>
     </div>
 </section>
@@ -88,40 +78,8 @@
                     &nbsp;
                     </div>
                 </div>
-                @if ($new) 
-                @foreach ($new as $d)
-                  <div class="row">
-                    <div class="col s12">
-                    </div>
-                  </div>
-                  <div class="row data-item">
-                    <div class="col s12">
-                        @if($d->image_header)
-                        <div class="figure">
-                            <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
-                        </div>
-                        <div class="content with-figure">
-                        @else
-                        <div class="content">
-                        @endif
-                          <a href="{{ url('page/'.$d->slug) }}">
-                            <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
-                          </a>
-                          <p class="no-margin">{{ str_limit(strip_tags($d->content), 200, '...') }}</p>
-                        </div>
-                    </div>
-                  </div>
-                @endforeach
-                @endif
-            </div>
-            <div id="view-data" class="col s9">
-                <div class="row">
-                    <div class="col s12">
-                    &nbsp;
-                    </div>
-                </div>
-                @if ($views) 
-                @foreach ($views as $d)
+                @if ($draft) 
+                @foreach ($draft as $d)
                   <div class="row">
                     <div class="col s12">
                     </div>
@@ -156,7 +114,7 @@
                   <div class="col s12">
               @if($tags)
               @foreach ($tags as $tag)
-                  <a class="btn btn-flat btn-small btn-tags-custom waves-effect font{{($tag->pages_count*10)/$sumTagCount}}" href="#">{{$tag->name}}</a>
+                  <a class="btn btn-flat btn-small btn-tags-custom waves-effect font{{($tag->pages_count*10)/($sumTagCount?$sumTagCount:1)}}" href="#">{{$tag->name}}</a>
               @endforeach
               @endif
                   </div>

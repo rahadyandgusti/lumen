@@ -88,25 +88,27 @@ class PagesController extends Controller
         $result = $this->model
                     ->create($req);
 
-        foreach ($request->tags as $key => $value) {
-            if (is_numeric($value)) {
-                $inputId = $value;
-            } else {
-                $inputId = 0;
-                $checkId = $this->tagModel->select('id')
-                            ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
-                if (count($checkId)) {
-                    $inputId = $checkId;
+        if (count($request->tags)) {
+            foreach ($request->tags as $key => $value) {
+                if (is_numeric($value)) {
+                    $inputId = $value;
                 } else {
-                    $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
-                    $inputId = $tmpInputTag->id;
-                }
+                    $inputId = 0;
+                    $checkId = $this->tagModel->select('id')
+                                ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                    if (count($checkId)) {
+                        $inputId = $checkId;
+                    } else {
+                        $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
+                        $inputId = $tmpInputTag->id;
+                    }
 
+                }
+                $this->tagPageModel->create([
+                    'page_id' => $result->id,
+                    'tag_id' => $inputId
+                ]);
             }
-            $this->tagPageModel->create([
-                'page_id' => $result->id,
-                'tag_id' => $inputId
-            ]);
         }
         
 
@@ -134,6 +136,9 @@ class PagesController extends Controller
     public function show($slug)
     {
     	$data = $this->model->with('tags.tag:id,name')->where('slug',$slug)->first();
+        $this->model->find($data->id)->update([
+            'hit' => intval($data->hit)+1
+        ]);
         return view($this->folder . '.show', [
             'title' => $this->title,
             'url' => $this->url,
@@ -203,7 +208,7 @@ class PagesController extends Controller
         
         $result = $this->model->find($id)
                     ->update($req);
-        if ($request->tags) {
+        if (count($request->tags)) {
             $notDelId = [];
 
             foreach ($request->tags as $key => $value) {

@@ -28,14 +28,36 @@ class HomeController extends Controller
     public function index()
     {
         $data['new'] = $this->page
-                        // ->where('status', 'publish')
+                        ->where('status', 'publish')
                         ->orderBy('id','desc')->get()->take(6);
         $data['views'] = $this->page
-                        // ->where('status', 'publish')
+                        ->where('status', 'publish')
                         ->orderBy('hit','desc')->get()->take(6);
         $data['tags'] = $this->tag
-                        ->orderBy('id','desc')->get()->take(10);
-
+                        ->withCount('pages')
+                        ->orderBy('id','desc')->get()->take(50);
+        $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view('home',$data);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function draft()
+    {
+        $user = \Auth::user();
+        $data['draft'] = $this->page
+                        ->where('status', 'draft')
+                        ->where('created_id', $user->id)
+                        ->orderBy('id','desc')->get()->take(6);
+        $data['tags'] = $this->tag
+                        ->whereHas('pages.page', function($query) use ($user){
+                            $query->where('created_id', $user->id);
+                        })
+                        ->orderBy('id','desc')->get()->take(50);
+        $data['sumTagCount'] = $data['tags']->sum('pages_count');
+        return view('pages.show-draft',$data);
     }
 }

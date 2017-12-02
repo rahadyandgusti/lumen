@@ -34,9 +34,17 @@
 	    border-top: 2px solid #BFD85C;
 	}
 
+	.add-border-right {
+	    border-right: 1px solid #FFFFFF;
+	}
+
 	.custom-green{
 	    background-color: #BFD85C;
 	}
+
+    .margin-bottom-5 {
+    	margin-bottom: 5px !important;
+    }
 
     .no-margin {
     	margin: 0 !important;
@@ -54,7 +62,7 @@
 	<div class="navbar-fixed">
 		<nav class="white black-text">
 			<div class="container nav-wrapper">
-				<a href="{{ route('home') }}" class="brand-logo black-text">Logo</a>
+				<a href="{{ route('home') }}" class="brand-logo waves-effect waves-green teal-text text-darken-4">{{ config('app.name', 'Laravel') }}</a>
 
 				<ul class="right">
 				@guest
@@ -95,34 +103,74 @@
 	      	<i class="large material-icons">menu</i>
 	    </a>
 	    <ul>
-	      	<li><a class="btn-floating green tooltipped" data-position="left" data-delay="50" data-tooltip="Lets go to Home page" href="{{ route('home') }}"><i class="material-icons">home</i></a></li>
-	      	<!-- <li><a class="btn-floating yellow darken-1"><i class="material-icons">list</i></a></li> -->
-	      	<li><a class="btn-floating red tooltipped" data-position="left" data-delay="50" data-tooltip="Add new content" href="{{ route('page.create') }}"><i class="material-icons">add</i></a></li>
+	      	<li>
+	      		<a class="btn-floating green tooltipped" 
+	      			data-position="left" 
+	      			data-delay="50" 
+	      			data-tooltip="Lets go to Home page" 
+	      			href="{{ route('home') }}"
+	      		>
+	      			<i class="material-icons">home</i>
+	      		</a>
+	      	</li>
+	      	@guest
+	      	<li>
+	      		<a class="btn-floating yellow darken-1 tooltipped" 
+		      		data-position="left" 
+		      		data-delay="50" 
+		      		data-tooltip="Under Construction" 
+		      		href="#"
+	      		>
+	      			<i class="material-icons">verified_user</i>
+	      		</a>
+	      	</li>
+	      	@else
+	      	<li>
+	      		<a class="btn-floating yellow darken-1 tooltipped" 
+		      		data-position="left" 
+		      		data-delay="50" 
+		      		data-tooltip="Your Draft" 
+		      		href="{{ route('draft') }}"
+	      		>
+	      			<i class="material-icons">drafts</i>
+	      		</a>
+	      	</li>
+	      	<li>
+		      	<a class="btn-floating red tooltipped" 
+			      	data-position="left" 
+			      	data-delay="50" 
+			      	data-tooltip="Add new content" 
+			      	href="{{ route('page.create') }}"
+		      	>
+		      		<i class="material-icons">add</i>
+		      	</a>
+	      	</li>
 	      	<!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
+	      	@endguest
 	    </ul>
 	</div>
 	<footer class="page-footer custom-green" style="bottom: 0px">
 		<div class="container">
 			<div class="row">
 				<div class="col l6 s12">
-					<h5 class="white-text">Footer Content</h5>
-					<p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+					<h5 class="white-text">About</h5>
+					<p class="grey-text text-lighten-4">ini hanya web catatan kecil <i>coding</i>. karena <i>developer</i> adalah seorang <i>programmer</i> yang sering lupa akan hal-hal kecil yang biasanya sangat penting. daripada mencari dari awal masih mending ditulis aja. Hahahaha...</p>
 				</div>
 				<div class="col l4 offset-l2 s12">
 					<h5 class="white-text">Links</h5>
 					<ul>
-					  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-					  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+					  <li><a class="grey-text text-lighten-3" href="{{route('home')}}">Home</a></li>
+					  <!-- <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
 					  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-					  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+					  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li> -->
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="footer-copyright">
 			<div class="container">
-				© 2014 Copyright Text
-				<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+				© 2017 Copyright
+				<!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
 			</div>
 		</div>
     </footer>
@@ -140,14 +188,14 @@
     	$('.materialboxed').materialbox();
     	$('.select_material').material_select();
 
-		$('input.autocomplete').autocomplete({
-			data: {
-			"Apple": null,
-			"Microsoft": null,
-			"Google": null,
-			"Gargle":null
-			}
-		});                
+		// $('input.autocomplete').autocomplete({
+		// 	data: {
+		// 	"Apple": null,
+		// 	"Microsoft": null,
+		// 	"Google": null,
+		// 	"Gargle":null
+		// 	}
+		// });                
 	});
 </script>
 @yield('scripts')

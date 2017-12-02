@@ -82,12 +82,16 @@
     <div class="row">
         <div class="col s12 m4 l3">
             <div class="input-field">
-                <select id="status" class="select_material" 
-                    value="{{isset($data)?$data->status:''}}"
-                >
-                    <option value="draft">Draft</option>
-                    <option value="publish">Publish</option>
-                    <option value="hidden">Hidden</option>
+                <select id="status" class="select_material">
+                    <option value="draft" 
+                        {{ (isset($data))?($data->status == 'draft'?'selected':''):'' }}
+                    >Draft</option>
+                    <option value="publish" 
+                        {{ (isset($data))?($data->status == 'publish'?'selected':''):'' }}
+                    >Publish</option>
+                    <option value="hidden" 
+                        {{ (isset($data))?($data->status == 'hidden'?'selected':''):'' }}
+                    >Hidden</option>
                 </select>
                 <label>Status</label>
             </div>
@@ -183,7 +187,7 @@
                     };
                 }
             }
-        })
+        });
     });
 
     $(document).on('click', '#btn-upload', function(e){
