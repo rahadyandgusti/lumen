@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+    <link rel="stylesheet" href="{!! asset('plugin/sweet-alert/sweetalert.css') !!}"/>
     <!-- Styles -->
     @yield('styles')
     <style type="text/css">
@@ -182,7 +182,7 @@
   crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="{!! asset('plugin/sweet-alert/sweetalert.min.js') !!} "></script>
 
 <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 <script type="text/javascript">
