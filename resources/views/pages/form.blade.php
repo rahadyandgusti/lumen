@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('plugin/ckeditor/skins/moono-lisa/editor.css') }}">
-<link rel="stylesheet" href="{{ asset('plugin/cropperjs/dist/cropper.min.css') }}">
-<link href="{{ asset('plugin/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+<!-- <link rel="stylesheet" href="{{ asset('plugin/ckeditor/skins/moono-lisa/editor.css') }}"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <style type="text/css">
     #image-preview {
         /*width: 942px;
@@ -119,9 +119,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugin/select2/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('plugin/cropperjs/dist/cropper.min.js') }}"></script>
-<script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
 <script type="text/javascript">
     var statusHeader = false;
     var image = document.getElementById('image');
@@ -140,17 +140,18 @@
                     // cropBoxResizable: false,
                     toggleDragModeOnDblclick: false,
                 };
-    var cropper;
+    var cropper = $('#image');
 
     $(document).ready(function(){
         @if(isset($data) && $data->image_header)
         statusHeader = true;
         var tmpOption = option;
             tmpOption.setData = {"x":0,"y":0,"width":945,"height":325,"rotate":0,"scaleX":1,"scaleY":1};
-        cropper = new Cropper(image, option);
+        // cropper = new cropper(image, option);
+        cropper = cropper.cropper(option);
         $('#image-preview')
             .css('height',($('#image-preview').width()*325)/945);
-        var imageData = cropper.getImageData();
+        var imageData = cropper.cropper('getImageData');
         // cropper.setCropBoxData({left:0, top:0, width:image.width, height:image.height});
         @endif
         $("#tags").select2({
@@ -201,7 +202,8 @@
         if (param == 'image') {
             $('#image-section').show();
             statusHeader = true;
-            cropper = new Cropper(image, option);
+            // cropper = new Cropper(image, option);
+            cropper = cropper.cropper(option);
             toggleBtn('.btn-header-image','leave');
             $('.btn-header-close').addClass('right');
             toggleBtn('.btn-header-close','over');
@@ -235,7 +237,8 @@
             FR.addEventListener("load", function(e) {
                 cropper.destroy();
                 document.getElementById("image").src = e.target.result;
-                cropper = new Cropper(image, option);
+                // cropper = new Cropper(image, option);
+                cropper = cropper.cropper(option);
             }); 
             
             FR.readAsDataURL( this.files[0] );
