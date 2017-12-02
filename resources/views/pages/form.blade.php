@@ -171,6 +171,7 @@
             },
             ajax: {
                 url: '{{ route("tag.get") }}',
+                delay: 250,
                 data: function (params) {
                     var query = {
                         search: params.term,
@@ -185,8 +186,10 @@
                     return {
                         results: data.data
                     };
-                }
-            }
+                },
+                cache: true
+            },
+            minimumInputLength:1,
         });
     });
 

@@ -241,7 +241,7 @@ class PagesController extends Controller
                 }
             }
 
-            $this->tagPageModel->whereNotIn('id',$notDelId)->delete();
+            $this->tagPageModel->where('page_id',$id)->whereNotIn('id',$notDelId)->delete();
         }
         
 
