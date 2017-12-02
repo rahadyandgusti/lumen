@@ -235,6 +235,12 @@
         }
     }
 
+    function strip(html){
+       var tmp = document.createElement("DIV");
+       tmp.innerHTML = html;
+       return tmp.textContent || tmp.innerText || "";
+    }
+
     document.getElementById("image-upload").addEventListener("change", readFile);
 
     $(document).on('keypress', '#title', function(e){
@@ -250,7 +256,7 @@
         var tags = $('#tags').val();
         var status = $('#status').val();
         var content = $('#content').html();
-        var title = $('#title-form').html().toLowerCase();
+        var title = strip($('#title-form').html().toLowerCase());
         var image = statusHeader? cropper.getCroppedCanvas().toDataURL('image/jpeg'): '';
         var url = '{{ $urlForm }}';
         var message = 'Are you sure to save this?';

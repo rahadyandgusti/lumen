@@ -25,43 +25,42 @@
 	main {
 	    flex: 1 0 auto;
 	}
+
+	.custom-grey{
+	    background-color: #F2F2F2;
+	}
+
+	.custom-border-top {
+	    border-top: 2px solid #BFD85C;
+	}
+
+	.custom-green{
+	    background-color: #BFD85C;
+	}
+
     .no-margin {
     	margin: 0 !important;
     }
     .no-padding {
     	padding: 0 !important;
     }
-    #topbarsearch .input-field .prefix { 
-        width:0rem !important;    
-    }
-    #topbarsearch nav ul li:hover, nav ul li.active {
-        background-color: none !important;
-    }
+    #topbarsearch .input-field input { 
+	    height: 2rem;
+	    margin-bottom: 0px;
+	}
     </style>
 </head>
 <body>
 	<div class="navbar-fixed">
-		<nav class="blue lighten-1">
+		<nav class="white black-text">
 			<div class="container nav-wrapper">
-				<a href="{{ route('home') }}" class="brand-logo">Logo</a>
+				<a href="{{ route('home') }}" class="brand-logo black-text">Logo</a>
 
 				<ul class="right">
-					<li>
-						<div class="center row">
-                          	<div class="col s12 " >
-                            	<div class="row" id="topbarsearch">
-                              		<div class="input-field col s6 s12 white-text">
-                                		<i class="white-text material-icons prefix">search</i>
-                                		<input type="text" placeholder="search" id="autocomplete-input" class="autocomplete white-text" >
-                                	</div>
-                              	</div>
-                            </div>
-                        </div>
-					</li>
 				@guest
-					<li><a href="{{ url('login') }}">login</a></li>
+					<li><a href="{{ url('login') }}" class=" black-text">login</a></li>
 				@else
-					<li><a class="dropdown-button" href="#!" data-activates="profile">
+					<li><a class="dropdown-button black-text" href="#!" data-activates="profile">
 						<i class="material-icons left">face</i>
 						<span class="hide-on-med-and-down">
 							{{ \Auth::user()->name }}
@@ -102,7 +101,7 @@
 	      	<!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
 	    </ul>
 	</div>
-	<footer class="page-footer" style="bottom: 0px">
+	<footer class="page-footer custom-green" style="bottom: 0px">
 		<div class="container">
 			<div class="row">
 				<div class="col l6 s12">

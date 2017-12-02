@@ -52,7 +52,10 @@
         <div class="col m12">
             @if (count($data->tags))
             @foreach ($data->tags as $tag)
-            <button class="waves-effect waves-teal btn-flat">{{$tag->tag->name}}</button>
+            <div class="chip">
+                <i class="close material-icons">local_offer</i>
+                {{$tag->tag->name}}
+            </div>
             @endforeach
             @endif
         </div>

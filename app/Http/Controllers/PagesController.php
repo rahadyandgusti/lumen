@@ -203,40 +203,41 @@ class PagesController extends Controller
         
         $result = $this->model->find($id)
                     ->update($req);
+        if ($request->tags) {
+            $notDelId = [];
 
-        $notDelId = [];
-
-        foreach ($request->tags as $key => $value) {
-            $inputId = 0;
-            if (is_numeric($value)) {
-                $inputId = $value;
-            } else {
-                $checkId = $this->tagModel->select('id')
-                            ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
-                if (count($checkId)) {
-                    $inputId = $checkId;
+            foreach ($request->tags as $key => $value) {
+                $inputId = 0;
+                if (is_numeric($value)) {
+                    $inputId = $value;
                 } else {
-                    $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
-                    $inputId = $tmpInputTag->id;
+                    $checkId = $this->tagModel->select('id')
+                                ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                    if (count($checkId)) {
+                        $inputId = $checkId;
+                    } else {
+                        $tmpInputTag = $this->tagModel->create(['name' => strtolower($value)]);
+                        $inputId = $tmpInputTag->id;
+                    }
+
                 }
+                $checkData = $this->tagPageModel->select('id')
+                            ->where('page_id',$id)
+                            ->where('tag_id',$inputId)
+                            ->first();
+                if (count($checkData) == 0) {
+                    $r = $this->tagPageModel->create([
+                        'page_id' => $id,
+                        'tag_id' => $inputId
+                    ]);
+                    $notDelId[] = $r->id;
+                } else {
+                    $notDelId[] = $checkData->id;
+                }
+            }
 
-            }
-            $checkData = $this->tagPageModel->select('id')
-                        ->where('page_id',$id)
-                        ->where('tag_id',$inputId)
-                        ->first();
-            if (count($checkData) == 0) {
-                $r = $this->tagPageModel->create([
-                    'page_id' => $id,
-                    'tag_id' => $inputId
-                ]);
-                $notDelId[] = $r->id;
-            } else {
-                $notDelId[] = $checkData->id;
-            }
+            $this->tagPageModel->whereNotIn('id',$notDelId)->delete();
         }
-
-        $this->tagPageModel->whereNotIn('id',$notDelId)->delete();
         
 
         if ($result) {
