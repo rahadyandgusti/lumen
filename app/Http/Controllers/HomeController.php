@@ -29,9 +29,11 @@ class HomeController extends Controller
     {
         $data['new'] = $this->page
                         ->where('status', 'publish')
+                        ->with('tags.tag:id,name')
                         ->orderBy('id','desc')->get()->take(6);
         $data['views'] = $this->page
                         ->where('status', 'publish')
+                        ->with('tags.tag:id,name')
                         ->orderBy('hit','desc')->get()->take(6);
         $data['tags'] = $this->tag
                         ->withCount('pages')
@@ -51,6 +53,7 @@ class HomeController extends Controller
         $data['draft'] = $this->page
                         ->where('status', 'draft')
                         ->where('created_id', $user->id)
+                        ->with('tags.tag:id,name')
                         ->orderBy('id','desc')->get()->take(6);
         $data['tags'] = $this->tag
                         ->whereHas('pages.page', function($query) use ($user){

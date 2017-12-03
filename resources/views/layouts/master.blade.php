@@ -11,52 +11,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{!! asset('plugin/sweet-alert/sweetalert.css') !!}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.0.6/dist/sweetalert2.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <!-- Styles -->
     @yield('styles')
-    <style type="text/css">
-    body {
-	    display: flex;
-	    min-height: 100vh;
-	    flex-direction: column;
-	}
-
-	main {
-	    flex: 1 0 auto;
-	}
-
-	.custom-grey{
-	    background-color: #F2F2F2;
-	}
-
-	.custom-border-top {
-	    border-top: 2px solid #BFD85C;
-	}
-
-	.add-border-right {
-	    border-right: 1px solid #FFFFFF;
-	}
-
-	.custom-green{
-	    background-color: #BFD85C;
-	}
-
-    .margin-bottom-5 {
-    	margin-bottom: 5px !important;
-    }
-
-    .no-margin {
-    	margin: 0 !important;
-    }
-    .no-padding {
-    	padding: 0 !important;
-    }
-    #topbarsearch .input-field input { 
-	    height: 2rem;
-	    margin-bottom: 0px;
-	}
-    </style>
+    <link rel="stylesheet" href="{!! asset('css/style.css') !!}"/>
 </head>
 <body>
 	<div class="navbar-fixed">
@@ -184,8 +145,8 @@ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="{!! asset('plugin/sweet-alert/sweetalert.min.js') !!} "></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.0.6/dist/sweetalert2.all.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script> -->
 
 <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 <script type="text/javascript">

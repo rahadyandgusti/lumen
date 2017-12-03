@@ -22,5 +22,5 @@ Route::group(['middleware'=>['auth']], function () {
 	Route::resource('page', 'PagesController')->except('show');
 	Route::get('/tag/get-data', 'TagsController@getData')->name('tag.get');
 });
+Route::get('/search', 'PagesController@search')->name('search');
 Route::get('/page/{slug}', 'PagesController@show')->name('page.show');
-Route::get('/testsearch', 'PagesController@testsearch');

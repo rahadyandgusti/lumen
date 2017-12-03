@@ -27,24 +27,13 @@
       padding: 0 .5rem;
       text-transform:none;
   }
-
-  .font1, .font0 {font-size: 10px;}
-  .font2 {font-size: 12px;}
-  .font3 {font-size: 14px;}
-  .font4 {font-size: 16px;}
-  .font5 {font-size: 18px;}
-  .font6 {font-size: 20px;}
-  .font7 {font-size: 22px;}
-  .font8 {font-size: 24px;}
-  .font9 {font-size: 28px;}
-  .font10 {font-size: 30px;}
 </style>
 @stop
 
 @section('content')
 <section class="head">
     <div class="container">
-        <div class="row no-margin">
+        <div class="row">
           <div class="col s12">
           </div>
         </div>
@@ -56,19 +45,7 @@
                 </ul>
             </div>
             <div class="col s12 m6">
-              <div class="row no-margin">
-                  <div class="col s12 " >
-                    <div class="row no-margin" id="topbarsearch">
-                        <div class="input-field col s6 s12 black-text">
-                          <i class="black-text material-icons prefix">search</i>
-                          <input type="text" placeholder="search" 
-                            id="autocomplete-input" 
-                            class="autocomplete black-text search-input"
-                          >
-                        </div>
-                      </div>
-                  </div>
-              </div>
+              @include('partialView.search')
             </div>
             <div class="col s12 hide-on-med-and-up">
                 <ul class="tabs">
@@ -82,71 +59,23 @@
 <section class="content custom-grey custom-border-top">
     <div class="container">
         <div class="row no-margin">
-            <div id="add-data" class="col s9">
+            <div id="add-data" class="col s12 m8">
                 <div class="row">
                     <div class="col s12">
                     &nbsp;
                     </div>
                 </div>
-                @if ($new) 
-                @foreach ($new as $d)
-                  <div class="row">
-                    <div class="col s12">
-                    </div>
-                  </div>
-                  <div class="row data-item">
-                    <div class="col s12">
-                        @if($d->image_header)
-                        <div class="figure">
-                            <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
-                        </div>
-                        <div class="content with-figure">
-                        @else
-                        <div class="content">
-                        @endif
-                          <a href="{{ url('page/'.$d->slug) }}">
-                            <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
-                          </a>
-                          <p class="no-margin">{{ str_limit(strip_tags($d->content), 200, '...') }}</p>
-                        </div>
-                    </div>
-                  </div>
-                @endforeach
-                @endif
+                @include('partialView.data-page',['data' => $new])
             </div>
-            <div id="view-data" class="col s9">
+            <div id="view-data" class="col s12 m8">
                 <div class="row">
                     <div class="col s12">
                     &nbsp;
                     </div>
                 </div>
-                @if ($views) 
-                @foreach ($views as $d)
-                  <div class="row">
-                    <div class="col s12">
-                    </div>
-                  </div>
-                  <div class="row data-item">
-                    <div class="col s12">
-                        @if($d->image_header)
-                        <div class="figure">
-                            <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
-                        </div>
-                        <div class="content with-figure">
-                        @else
-                        <div class="content">
-                        @endif
-                          <a href="{{ url('page/'.$d->slug) }}">
-                            <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
-                          </a>
-                          <p class="no-margin">{{ str_limit(strip_tags($d->content), 200, '...') }}</p>
-                        </div>
-                    </div>
-                  </div>
-                @endforeach
-                @endif
+                @include('partialView.data-page',['data' => $views])
             </div>
-            <div class="col s3">
+            <div class="col s12 m4">
               <div class="row">
                   <div class="col s12">
                   <h5 class="center"><strong>Tags</strong></h5>
@@ -154,11 +83,7 @@
               </div>
               <div class="row margin-bottom-5">
                   <div class="col s12">
-              @if($tags)
-              @foreach ($tags as $tag)
-                  <a class="btn btn-flat btn-small btn-tags-custom waves-effect font{{($tag->pages_count*10)/$sumTagCount}}" href="#">{{$tag->name}}</a>
-              @endforeach
-              @endif
+                    @include('partialView.data-tag',['data' => $tags])
                   </div>
               </div>
             </div>

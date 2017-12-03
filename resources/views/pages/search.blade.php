@@ -53,7 +53,12 @@
                     &nbsp;
                     </div>
                 </div>
-                @include('partialView.data-page',['data' => $draft])
+                <div class="row no-margin">
+                    <div class="col s12">
+                      <p class="text-flow">Search for keyword '{{\Request::get('keyword')}}' in Title, Content and Tags.</p>
+                    </div>
+                </div>
+                @include('partialView.data-page',['data' => $data])
             </div>
             <div class="col s3">
               <div class="row">

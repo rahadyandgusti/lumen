@@ -273,16 +273,23 @@ class PagesController extends Controller
         }
 
         return ['respond' => false, 'message' => 'Failed to delete'];
-        return '';
     }
 
     public function search(RequestDefault $request) {
-        $search = $this->model->search($request->get('search'))->get()->toArray();
-        return $search;
-    }
-
-    public function testsearch() {
-        $search = $this->model->search('a')->get()->toArray();
-        return $search;
+        if($request->get('keyword')){
+            $data['data'] = $this->model
+                        ->search($request->get('keyword'))
+                        ->groupBy('id')
+                        ->paginate(15);
+        } else {
+            $data['data'] = $this->model
+                        ->where('id', 0)
+                        ->paginate(15);
+        }
+        $data['tags'] = $this->tagModel
+                        ->withCount('pages')
+                        ->orderBy('id','desc')->get()->take(50);
+        $data['sumTagCount'] = $data['tags']->sum('pages_count');
+        return view($this->folder . '.search', $data);
     }
 }
