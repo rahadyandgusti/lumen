@@ -264,7 +264,7 @@
             var FR = new FileReader();
             
             FR.addEventListener("load", function(e) {
-                cropper.destroy();
+                cropper.cropper('destroy');
                 document.getElementById("image").src = e.target.result;
                 // cropper = new Cropper(image, option);
                 cropper = cropper.cropper(option);
