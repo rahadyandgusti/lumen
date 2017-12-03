@@ -37,6 +37,7 @@ class HomeController extends Controller
                         ->orderBy('hit','desc')->get()->take(6);
         $data['tags'] = $this->tag
                         ->withCount('pages')
+                        ->whereHas('pages')
                         ->orderBy('id','desc')->get()->take(50);
         $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view('home',$data);

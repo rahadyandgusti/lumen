@@ -20,102 +20,131 @@
 @stop
 
 @section('content')
-<div class="container">
-    <br>
-    <div class="row">
-            <button class="btn-floating scale-transition btn-float
-                {{ isset($data)?($data->image_header?'scale-out':'scale-in right'):'scale-in right' }} btn-header-image"
-                onclick="toggleHeader('image')"
-            >
-                <i class="material-icons">image</i>
-            </button>
-            <button class="btn-floating scale-transition btn-float red
-                {{ isset($data)?($data->image_header?'scale-in right':'scale-out'):'scale-out' }} btn-header-close" 
-                onclick="toggleHeader('close')"
-            >
-                <i class="material-icons">close</i>
-            </button>
-        <div id="image-section" style="display: {{ isset($data) && $data->image_header?'':'none' }}" onmouseover="toggleBtn('#btn-upload','over')" onmouseleave="toggleBtn('#btn-upload','leave')">
-        <div class="col s12">
-            <div id="image-preview"></div>
+<section class="head">
+    <div class="container">
+        <div class="row">
+          <div class="col s12">
+          </div>
         </div>
-        <div class="col m6">
-            <img id="image" 
-                src="{{ isset($data)?( $data->image_header? \ImageHelper::getContentHeader($data->image_header):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg'):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg' }}" 
-                style="max-width: 100%"
-            >
-            <input type="file" id="image-upload" style="display: none">
-        </div>
-        <div class="col m6">
-            <button class="btn-floating scale-transition left scale-out" id="btn-upload"><i class="material-icons">file_upload</i></button>
-        </div>
-        </div>
-        <div class="col s12">
-            <div id="title">
-                <h3 contenteditable=true id="title-form">
-            @if(isset($data))
-                {{ title_case($data->title) }}
-            @else
-                This is sample title. Click Here...
-            @endif
-                </h3>
-            </div>
-        </div>
-        <div class="col s12">
-            <span class="grey-text">
-                <i class="material-icons tiny">face</i> {{ isset($data)? $data->createduser->name: \Auth::user()->name }} 
-                <i class="material-icons tiny">access_time</i> 
-                    {{ \Carbon\Carbon::now()->format('d M Y H:i')}}
-            </span>
-        </div>
-        <div class="col s12">
-            <div id="content" style="min-height:100px">
-            @if(isset($data))
-                {!! $data->content !!}
-            @else
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Click Here...</p>
-            @endif
+        <div class="row">
+            <div class="col s12">
+              @include('partialView.search')
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col s12 m4 l3">
-            <div class="input-field">
-                <select id="status" class="select_material">
-                    <option value="draft" 
-                        {{ (isset($data))?($data->status == 'draft'?'selected':''):'' }}
-                    >Draft</option>
-                    <option value="publish" 
-                        {{ (isset($data))?($data->status == 'publish'?'selected':''):'' }}
-                    >Publish</option>
-                    <option value="hidden" 
-                        {{ (isset($data))?($data->status == 'hidden'?'selected':''):'' }}
-                    >Hidden</option>
-                </select>
-                <label>Status</label>
+</section>
+<section class="content custom-grey custom-border-top">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col s12">
+                <button class="btn-floating scale-transition btn-float
+                    {{ isset($data)?($data->image_header?'scale-out':'scale-in'):'scale-in' }} btn-header-image"
+                    onclick="toggleHeader('image')"
+                >
+                    <i class="material-icons">image</i>
+                </button>
+                <button class="btn-floating scale-transition btn-float red
+                    {{ isset($data)?($data->image_header?'scale-in right':'scale-out'):'scale-out' }} btn-header-close" 
+                    onclick="toggleHeader('close')"
+                >
+                    <i class="material-icons">close</i>
+                </button>
             </div>
-        </div>
-        <div class="col s12 m8 l9">
-                <label>Tags</label>
-                <select id="tags" class="browser-default" multiple="multiple">
+            <div id="image-section" style="display: {{ isset($data) && $data->image_header?'':'none' }}" onmouseover="toggleBtn('#btn-upload','over')" onmouseleave="toggleBtn('#btn-upload','leave')">
+            <div class="col s12">
+                <div id="image-preview"></div>
+            </div>
+            <div class="col m6">
+                <img id="image" 
+                    src="{{ isset($data)?( $data->image_header? \ImageHelper::getContentHeader($data->image_header):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg'):'https://fengyuanchen.github.io/cropperjs/images/picture.jpg' }}" 
+                    style="max-width: 100%"
+                >
+                <input type="file" id="image-upload" style="display: none">
+            </div>
+            <div class="col m6">
+                <button class="btn-floating scale-transition left scale-out" id="btn-upload"><i class="material-icons">file_upload</i></button>
+            </div>
+            </div>
+            <div class="col s12">
+                <div id="title">
+                    <h3 contenteditable=true id="title-form">
                 @if(isset($data))
-                    @foreach($data->tags as $tag)
-                    <option value="{{$tag->tag_id}}" selected="selected">{{$tag->tag->name}}</option>
-                    @endforeach
+                    {{ title_case($data->title) }}
+                @else
+                    This is sample title. Click Here...
                 @endif
-                </select>
+                    </h3>
+                </div>
+            </div>
+            <div class="col s12">
+                <span class="grey-text">
+                    <i class="material-icons tiny">face</i> {{ isset($data)? $data->createduser->name: \Auth::user()->name }} 
+                    <i class="material-icons tiny">access_time</i> 
+                        {{ \Carbon\Carbon::now()->format('d M Y H:i')}}
+                </span>
+            </div>
+            <div class="col s12">
+                <div id="content" style="min-height:100px">
+                @if(isset($data))
+                    {!! $data->content !!}
+                @else
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Click Here...</p>
+                @endif
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <button class="btn btn-delete red right"><i class="material-icons left">delete</i> Delete</button>
+        <div class="row">
+            <div class="col s12 m4 l3">
+                <div class="input-field">
+                    <select id="status" class="select_material">
+                        <option value="draft" 
+                            {{ (isset($data))?($data->status == 'draft'?'selected':''):'' }}
+                        >Draft</option>
+                        <option value="publish" 
+                            {{ (isset($data))?($data->status == 'publish'?'selected':''):'' }}
+                        >Publish</option>
+                        <option value="hidden" 
+                            {{ (isset($data))?($data->status == 'hidden'?'selected':''):'' }}
+                        >Hidden</option>
+                    </select>
+                    <label>Status</label>
+                </div>
+            </div>
+            <div class="col s12 m8 l9">
+                    <label>Tags</label>
+                    <select id="tags" class="browser-default" multiple="multiple">
+                    @if(isset($data))
+                        @foreach($data->tags as $tag)
+                        <option value="{{$tag->tag_id}}" selected="selected">{{$tag->tag->name}}</option>
+                        @endforeach
+                    @endif
+                    </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <a href="{{ route('home') }}" class="btn orange accent-2"><i class="material-icons left">arrow_back</i> Back</a>
+                <button class="btn btn-save hide-on-small-only">Save<i class="material-icons right">send</i></button>
+                <button class="btn btn-save right hide-on-med-and-up center">Save<i class="material-icons right">send</i></button>
+            </div>
 
-            <a href="{{ route('home') }}" class="btn orange accent-2"><i class="material-icons left">arrow_back</i> Back</a>
-            <button class="btn btn-save">Save<i class="material-icons right">send</i></button>
+            <div class="col m6 hide-on-small-only">
+                <button class="btn btn-delete red right"><i class="material-icons left">delete</i> Delete</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 hide-on-med-and-up center">
+                <button class="btn btn-delete red"><i class="material-icons left">delete</i> Delete</button>
+            </div>
+        </div>
+        <div class="row no-margin">
+            <div class="col m12">
+            </div>
         </div>
     </div>
-</div>
+</section>
 @endsection
 
 @section('scripts')

@@ -7,13 +7,11 @@
   <div class="row data-item">
     <div class="col s12">
         @if($d->image_header)
-        <div class="figure">
+        <div class="col s12 m3">
             <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
         </div>
-        <div class="content with-figure">
-        @else
-        <div class="content">
         @endif
+        <div class="col s12 m9">
           <a href="{{ url('page/'.$d->slug) }}">
             <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
           </a>

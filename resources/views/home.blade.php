@@ -2,32 +2,6 @@
 @extends('layouts.master')
 
 @section('styles')
-<style type="text/css">
-  .data-item .content {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0 .75rem;
-    min-height: 1px;
-  }
-  .data-item .content.with-figure {
-    margin-left: 150px;
-  }
-  .data-item .figure{
-    float: left;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 1px;
-    width: 150px;
-  }
-  .data-item .figure img{
-    width: 150px;
-  }
-
-  .btn-tags-custom {
-      padding: 0 .5rem;
-      text-transform:none;
-  }
-</style>
 @stop
 
 @section('content')

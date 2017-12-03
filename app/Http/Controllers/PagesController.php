@@ -288,6 +288,7 @@ class PagesController extends Controller
         }
         $data['tags'] = $this->tagModel
                         ->withCount('pages')
+                        ->whereHas('pages')
                         ->orderBy('id','desc')->get()->take(50);
         $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view($this->folder . '.search', $data);
