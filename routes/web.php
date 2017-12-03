@@ -12,15 +12,15 @@
 */
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::post('/upload', 'HomeController@upload')->name('upload');
+Route::get('/', 'HomeController@index')->name('home')->middleware('underconstruction');
+Route::post('/upload', 'HomeController@upload')->name('upload')->middleware('underconstruction');
 
 Route::group(['middleware'=>['auth']], function () {
-	Route::get('/draft', 'HomeController@draft')->name('draft');
-	Route::resource('page', 'PagesController')->except('show');
-	Route::get('/tag/get-data', 'TagsController@getData')->name('tag.get');
+	Route::get('/draft', 'HomeController@draft')->name('draft')->middleware('underconstruction');
+	Route::resource('page', 'PagesController')->except('show')->middleware('underconstruction');
+	Route::get('/tag/get-data', 'TagsController@getData')->name('tag.get')->middleware('underconstruction');
 });
-Route::get('/search', 'PagesController@search')->name('search');
-Route::get('/page/{slug}', 'PagesController@show')->name('page.show');
+Route::get('/search', 'PagesController@search')->name('search')->middleware('underconstruction');
+Route::get('/page/{slug}', 'PagesController@show')->name('page.show')->middleware('underconstruction');

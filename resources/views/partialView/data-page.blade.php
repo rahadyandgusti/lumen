@@ -11,7 +11,7 @@
             <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
         </div>
         @endif
-        <div class="col s12 m9">
+        <div class="col s12 {{ ($d->image_header)?'m9':'' }}">
           <a href="{{ url('page/'.$d->slug) }}">
             <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
           </a>

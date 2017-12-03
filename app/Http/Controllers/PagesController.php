@@ -136,9 +136,14 @@ class PagesController extends Controller
     public function show($slug)
     {
     	$data = $this->model->with('tags.tag:id,name')->where('slug',$slug)->first();
-        $this->model->find($data->id)->update([
-            'hit' => intval($data->hit)+1
-        ]);
+        if(count($data) == 0){
+            abort(404);
+        }
+        if($data->status == 'publish'){
+            $this->model->find($data->id)->update([
+                'hit' => intval($data->hit)+1
+            ]);
+        }
         return view($this->folder . '.show', [
             'title' => $this->title,
             'url' => $this->url,

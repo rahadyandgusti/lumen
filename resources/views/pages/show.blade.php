@@ -58,6 +58,7 @@
                             \Carbon\Carbon::parse($data->updated_at)->format('d M Y H:i'):
                             \Carbon\Carbon::parse($data->created_at)->format('d M Y H:i') 
                         }}
+                    <i class="material-icons tiny">visibility</i> {{ number_format($data->hit,'0','',',') }}
                 </span>
             </div>
             <div class="col s12">

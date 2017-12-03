@@ -283,10 +283,16 @@
     document.getElementById("image-upload").addEventListener("change", readFile);
 
     $(document).on('keypress', '#title', function(e){
+        var title = strip($('#title-form').html());
+        // $('#title-form').html(title);
         if(e.which == 13){
-            console.log('enter');
             e.preventDefault();
             return false;
+        }
+        if(title.length > 255){
+            swal('Ooops!','Title already 255 char', 'error');
+            e.preventDefault();
+            return false;   
         }
     });
     
