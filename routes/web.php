@@ -24,3 +24,4 @@ Route::group(['middleware'=>['auth']], function () {
 });
 Route::get('/search', 'PagesController@search')->name('search');
 Route::get('/page/{slug}', 'PagesController@show')->name('page.show');
+Route::get('/tags/{tag}', 'PagesController@tags')->name('page.tag');

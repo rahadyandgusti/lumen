@@ -298,4 +298,34 @@ class PagesController extends Controller
         $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view($this->folder . '.search', $data);
     }
+
+    public function tags($tag) {
+        $data['data'] = $this->model
+                        ->whereHas('tags.tag', function($query) use ($tag){
+                            $query->where('name', $tag);
+                        })
+                        ->paginate(15);
+        $data['tag'] = $tag;
+        $data['tags'] = $this->tagModel
+                        ->withCount('pages')
+                        ->whereHas('pages')
+                        ->orderBy('id','desc')->get()->take(50);
+        $data['sumTagCount'] = $data['tags']->sum('pages_count');
+        return view($this->folder . '.tags', $data);
+    }
+
+    public function getSearch(RequestDefault $request) {
+        if($request->get('keyword')){
+            return $this->model
+                        ->search($request->get('keyword'))
+                        ->groupBy('id')
+                        ->paginate(15);
+        } else {
+            return $this->model
+                        ->where('id', 0)
+                        ->paginate(15);
+        }
+
+        return view($this->folder . '.search', $data);
+    }
 }

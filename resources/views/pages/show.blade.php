@@ -70,8 +70,8 @@
                 @if (count($data->tags))
                 @foreach ($data->tags as $tag)
                 <div class="chip">
-                    <i class="close material-icons">local_offer</i>
                     {{$tag->tag->name}}
+                    <i class="material-icons tiny">local_offer</i>
                 </div>
                 @endforeach
                 @endif

@@ -29,7 +29,7 @@
                 </div> -->
                 <div class="row no-margin">
                     <div class="col s12">
-                      <p class="text-flow no-margin-bottom grey-text">Search for keyword '{{\Request::get('keyword')}}' in Title and/or Content and/or Tags.</p> 
+                      <p class="text-flow no-margin-bottom grey-text">All data that has tag '{{$tag}}'.</p> 
                       <p class="text-flow no-margin grey-text">{{$data->count()}} data found</p>
                     </div>
                 </div>

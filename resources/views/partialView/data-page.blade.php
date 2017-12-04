@@ -13,9 +13,9 @@
         @endif
         <div class="col s12 {{ ($d->image_header)?'m9':'' }}">
           <a href="{{ url('page/'.$d->slug) }}">
-            <strong class="title no-margin">{{ title_case(str_limit(strip_tags($d->title),100,'...')) }}</strong>
+            <strong class="title no-margin font6">{{ title_case(str_limit(strip_tags($d->title),90,'...')) }}</strong>
           </a>
-          <p class="no-margin">{{ str_limit(strip_tags($d->content), 200, '...') }}</p>
+          <p class="no-margin">{{ str_limit(strip_tags($d->content), 180, '...') }}</p>
           <p class="truncate no-margin">
             @foreach ($d->tags as $tag)
                 <a class="btn btn-flat btn-small btn-tags-custom waves-effect" href="#">
