@@ -283,6 +283,7 @@ class PagesController extends Controller
     public function search(RequestDefault $request) {
         if($request->get('keyword')){
             $data['data'] = $this->model
+                        ->where('status', 'publish')
                         ->search($request->get('keyword'))
                         ->groupBy('id')
                         ->paginate(15);
@@ -317,6 +318,7 @@ class PagesController extends Controller
     public function getSearch(RequestDefault $request) {
         if($request->get('keyword')){
             return $this->model
+                        ->where('status', 'publish')
                         ->search($request->get('keyword'))
                         ->groupBy('id')
                         ->paginate(15);
