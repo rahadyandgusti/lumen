@@ -284,7 +284,7 @@ class PagesController extends Controller
         if($request->get('keyword')){
             $data['data'] = $this->model
                         ->where('status', 'publish')
-                        ->search($request->get('keyword'))
+                        ->search($request->get('keyword'), null, true)
                         ->groupBy('id')
                         ->paginate(15);
         } else {
@@ -319,7 +319,7 @@ class PagesController extends Controller
         if($request->get('keyword')){
             return $this->model
                         ->where('status', 'publish')
-                        ->search($request->get('keyword'))
+                        ->search($request->get('keyword'), null, true)
                         ->groupBy('id')
                         ->paginate(15);
         } else {
