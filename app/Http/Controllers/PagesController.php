@@ -42,6 +42,13 @@ class PagesController extends Controller
      */
     public function create()
     {
+        \SEO::setTitle('Buat Content');
+        \SEO::setDescription('Buat content yang dari user '.\Auth::user()->name);
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+
         return view($this->folder . '.form', [
             'title' => $this->title,
             'url' => $this->url,
@@ -136,6 +143,23 @@ class PagesController extends Controller
     public function show($slug)
     {
     	$data = $this->model->with('tags.tag:id,name')->where('slug',$slug)->first();
+
+        \SEO::setTitle(str_limit($data->title, 160));
+        \SEO::setDescription(str_limit(strip_tags($data->content), 160));
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+        $tags = [];
+        foreach ($data->tags as $value) {
+            $tags[] = $value->tag->name;
+        }
+        \SEOMeta::addKeyword($tags); 
+        if($data->image_header){
+            \SEO::opengraph()->addImage(\ImageHelper::getContentHeader($data->image_header), ['height' => 300, 'width' => 300]);
+            \SEO::opengraph()->addImage(\ImageHelper::getContentHeaderThumb($data->image_header), ['height' => 300, 'width' => 300]);
+        }
+
         if(count($data) == 0){
             abort(404);
         }
@@ -160,6 +184,22 @@ class PagesController extends Controller
     public function edit( $id)
     {
         $data = $this->model->with('tags.tag:id,name')->find($id);
+
+        \SEO::setTitle('Ubah Content dengan judul: '.str_limit($data->title, 140));
+        \SEO::setDescription('Ubah content yang dari user '.\Auth::user()->name);
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+        $tags = [];
+        foreach ($data->tags as $value) {
+            $tags[] = $value->tag->name;
+        }
+        \SEOMeta::addKeyword($tags); 
+        if($data->image_header){
+            \SEO::opengraph()->addImage(\ImageHelper::getContentHeader($data->image_header), ['height' => 300, 'width' => 300]);
+            \SEO::opengraph()->addImage(\ImageHelper::getContentHeaderThumb($data->image_header), ['height' => 300, 'width' => 300]);
+        }
 
         return view($this->folder . '.form', [
             'title' => $this->title,
@@ -281,10 +321,18 @@ class PagesController extends Controller
     }
 
     public function search(RequestDefault $request) {
+        \SEO::setTitle('Pencarian');
+        \SEO::setDescription('List pencarian content');
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+        \SEOMeta::addKeyword([$request->get('keyword')]); 
+
         if($request->get('keyword')){
             $data['data'] = $this->model
                         ->where('status', 'publish')
-                        ->select(\DB::raw('distinct id'), 'title', 'content','image_header')
+                        ->select(\DB::raw('distinct id'), 'slug', 'title', 'content','image_header')
                         ->search($request->get('keyword'), null, true)
                         ->with('tags')
                         ->paginate(15);

@@ -27,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        \SEO::setTitle('Home');
+        \SEO::setDescription('ini hanya web catatan kecil coding. karena developer adalah seorang programmer yang sering lupa akan hal-hal kecil yang biasanya sangat penting. daripada mencari dari awal masih mending ditulis aja. ');
+        \SEO::opengraph()->setUrl(url('/'));
+        \SEO::setCanonical(url('/'));
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+
         $data['new'] = $this->page
                         ->where('status', 'publish')
                         ->with('tags.tag:id,name')
@@ -51,6 +58,13 @@ class HomeController extends Controller
     public function draft()
     {
         $user = \Auth::user();
+        \SEO::setTitle('Draft');
+        \SEO::setDescription('List content draft yang sudah ditulis namun belum di publish ke umum dari user '.$user->name);
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+
         $data['draft'] = $this->page
                         ->where('status', 'draft')
                         ->where('created_id', $user->id)
