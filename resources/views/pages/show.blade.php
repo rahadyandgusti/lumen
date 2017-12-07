@@ -69,10 +69,11 @@
             <div class="col m12">
                 @if (count($data->tags))
                 @foreach ($data->tags as $tag)
-                <div class="chip">
+                <a class="btn btn-flat btn-small btn-tags-custom waves-effect" 
+                href="{{ route('page.tag', $tag->tag->name) }}">
                     {{$tag->tag->name}}
-                    <i class="material-icons tiny">local_offer</i>
-                </div>
+                    <i class="material-icons tiny right">local_offer</i>
+                </a>
                 @endforeach
                 @endif
             </div>

@@ -223,6 +223,14 @@
         });
     });
 
+    $(document).on('keydown', function(e){
+        if(e.ctrlKey && e.which === 83){ // Check for the Ctrl key being pressed, and if the key = [S] (83)
+            console.log('Ctrl+S!');
+            e.preventDefault();
+            $('.btn-save').click();
+        }
+    });
+
     $(document).on('click', '#btn-upload', function(e){
         $('#image-upload').click();
     });
