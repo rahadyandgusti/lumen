@@ -284,8 +284,9 @@ class PagesController extends Controller
         if($request->get('keyword')){
             $data['data'] = $this->model
                         ->where('status', 'publish')
+                        ->select(\DB::raw('distinct id'), 'title', 'content','image_header')
                         ->search($request->get('keyword'), null, true)
-                        ->groupBy('id')
+                        ->with('tags')
                         ->paginate(15);
         } else {
             $data['data'] = $this->model
@@ -318,9 +319,10 @@ class PagesController extends Controller
     public function getSearch(RequestDefault $request) {
         if($request->get('keyword')){
             return $this->model
+                        ->select(\DB::raw('distinct id'), 'title', 'content','image_header')
                         ->where('status', 'publish')
                         ->search($request->get('keyword'), null, true)
-                        ->groupBy('id')
+                        ->with('tags')
                         ->paginate(15);
         } else {
             return $this->model
