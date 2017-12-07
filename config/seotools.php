@@ -17,8 +17,8 @@ return [
          * Webmaster tags are always added.
          */
         'webmaster_tags' => [
-            'google'    => null,
-            'bing'      => null,
+            'google'    => true,
+            'bing'      => true,
             'alexa'     => null,
             'pinterest' => null,
             'yandex'    => null,
