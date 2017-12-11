@@ -18,9 +18,8 @@
           <p class="no-margin">{{ str_limit(strip_tags($d->content), 180, '...') }}</p>
           <p class="truncate no-margin">
             @foreach ($d->tags as $tag)
-                <a class="btn btn-flat btn-small btn-tags-custom waves-effect grey-text" href="{{ route('page.tag', $tag->tag->name) }}">
-                  {{$tag->tag->name}}
-                  <i class="material-icons tiny right">local_offer</i>
+                <a class="grey-text" href="{{ route('page.tag', $tag->tag->name) }}">
+                  #{{$tag->tag->name}}
                 </a>
             @endforeach
           </p>
