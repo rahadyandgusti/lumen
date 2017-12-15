@@ -78,4 +78,20 @@ class HomeController extends Controller
         $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view('pages.show-draft',$data);
     }
+
+    public function testHome(){
+        $data['data'] = $this->page
+                        ->select('id','image_header')
+                        ->where('status', 'publish')
+                        ->orderBy('id','desc')->get();
+        return view('pages.testHome', $data);
+    }
+    public function getData($id){
+        $data = $this->page
+                        ->find($id);
+        return $data;
+    }
+    public function testPage($test){
+        return view('pages.testPage');
+    }
 }
