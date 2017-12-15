@@ -21,11 +21,14 @@
 <section class="content custom-grey custom-border-top">
     <div class="container">
         <div class="row no-margin data-item">
+                <?php 
+                $i = 0;
+                ?>
                 @if (count($data)) 
                 @foreach ($data as $d)
                         @if($d->image_header)
                   <div class="col s12 m6 l3">
-                    <a href="#modal1" class="modal-trigger" data-id="{{$d->id}}">
+                    <a href="#modal1" class="modal-trigger" data-id="{{$d->id}}" data-index="{{$i}}">
                     <div class="col s12">
                         <div class="col s12">
                             <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img ">
@@ -33,6 +36,7 @@
                     </div>
                     </a>
                   </div>
+                  <?php $i++; ?>
                         @endif
                 @endforeach
                 @endif
@@ -62,6 +66,7 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal({
       ready: function(modal, trigger) { 
+        index = $(trigger).data('index');
         getDataShow($(trigger).data('id'));
       },
       complete: function() { 
@@ -72,10 +77,11 @@
   $(document).on('click','#next', function(e){
       e.preventDefault();
       var newIndex = parseInt(index) + 1;
-      if($('.data-item').children().eq(newIndex)){
+      if($('.data-item').children().eq(newIndex).find('a.modal-trigger').data('id')){
         var data = $('.data-item').children().eq(newIndex);
         console.log(data);
         getDataShow($('.data-item').children().eq(newIndex).find('a.modal-trigger').data('id')); 
+        index = newIndex;
       }
       return false;
   })
@@ -84,6 +90,7 @@
       if(parseInt(index) != 0){
         var newIndex = index - 1;
         getDataShow($('.data-item').children().eq(newIndex).find('a.modal-trigger').data('id')); 
+        index = newIndex;
       }
       return false;
   })
