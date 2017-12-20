@@ -332,15 +332,18 @@ class PagesController extends Controller
         if($request->get('keyword')){
             $data['data'] = $this->model
                         ->where('status', 'publish')
-                        ->select(\DB::raw('distinct id'), 'slug', 'title', 'content','image_header')
+                        ->select('id', 'slug', 'title','created_id')
+                        ->groupBy('id')
                         ->search($request->get('keyword'), null, true)
                         ->with('tags')
+                        ->with('createduser')
                         ->paginate(15);
         } else {
             $data['data'] = $this->model
                         ->where('id', 0)
                         ->paginate(15);
         }
+        // return $data;
         $data['tags'] = $this->tagModel
                         ->withCount('pages')
                         ->whereHas('pages')

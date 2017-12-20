@@ -4,25 +4,22 @@
   </div>
 @if (count($data)) 
 @foreach ($data as $d)
-  <div class="row data-item">
+  <div class="row ">
     <div class="col s12">
-        @if($d->image_header)
-        <div class="col s12 m3">
-            <img src="{{ \ImageHelper::getContentHeaderThumb($d->image_header) }}" alt="" class="responsive-img materialboxed">
-        </div>
-        @endif
-        <div class="col s12 {{ ($d->image_header)?'m9':'' }}">
+        <div class="card-panel hoverable">
+          <h5>
           <a href="{{ url('page/'.$d->slug) }}">
-            <strong class="title no-margin font6">{{ title_case(str_limit(strip_tags($d->title),90,'...')) }}</strong>
+              <span class="card-title">{{ title_case(str_limit(strip_tags($d->title),90,'...')) }}</span>
           </a>
-          <p class="no-margin">{{ str_limit(strip_tags($d->content), 180, '...') }}</p>
-          <p class="truncate no-margin">
+          </h5>
+          <p class="grey-text">by {{$d->createduser?$d->createduser->name:'-'}}</p>
+          <span>
             @foreach ($d->tags as $tag)
-                <a class="grey-text" href="{{ route('page.tag', $tag->tag->name) }}">
+                <a class="red-text text-lighten-2" href="{{ route('page.tag', $tag->tag->name) }}">
                   #{{$tag->tag->name}}
                 </a>
             @endforeach
-          </p>
+          </span>
         </div>
     </div>
   </div>

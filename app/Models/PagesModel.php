@@ -31,6 +31,7 @@ class PagesModel extends Model
         'joins' => [
             'tag_pages' => ['pages.id','tag_pages.page_id'],
             'tags' => ['tag_pages.tag_id','tags.id'],
+            'users' => ['pages.created_id','users.id'],
         ],
     ];
 

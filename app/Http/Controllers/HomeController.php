@@ -36,11 +36,13 @@ class HomeController extends Controller
 
         $data['new'] = $this->page
                         ->where('status', 'publish')
-                        ->with('tags.tag:id,name')
+                        ->select('id', 'slug', 'title','created_id')
+                        ->with('tags.tag:id,name','createduser:id,name')
                         ->orderBy('id','desc')->get()->take(6);
         $data['views'] = $this->page
                         ->where('status', 'publish')
-                        ->with('tags.tag:id,name')
+                        ->select('id', 'slug', 'title','created_id')
+                        ->with('tags.tag:id,name','createduser:id,name')
                         ->orderBy('hit','desc')->get()->take(6);
         $data['tags'] = $this->tag
                         ->withCount('pages')

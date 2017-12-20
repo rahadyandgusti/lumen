@@ -69,7 +69,7 @@
             <div class="col m12">
                 @if (count($data->tags))
                 @foreach ($data->tags as $tag)
-                <a class="grey-text" 
+                <a class="red-text text-lighten-2" 
                 href="{{ route('page.tag', $tag->tag->name) }}">
                     #{{$tag->tag->name}}
                 </a>
