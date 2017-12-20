@@ -168,10 +168,19 @@ class PagesController extends Controller
                 'hit' => intval($data->hit)+1
             ]);
         }
+
+        $tags = $this->tagModel
+                        ->withCount('pages')
+                        ->whereHas('pages')
+                        ->orderBy('id','desc')->get()->take(50);
+
+        $sumTagCount = $tags->sum('pages_count');
         return view($this->folder . '.show', [
             'title' => $this->title,
             'url' => $this->url,
-            'data' => $data
+            'data' => $data,
+            'tags' => $tags,
+            'sumTagCount' => $sumTagCount,
         ]);
     }
 
