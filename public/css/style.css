@@ -67,3 +67,6 @@ width: 150px;
 padding: 0 .5rem;
 text-transform:none;
 }
+.card-panel{
+	padding: 15px;
+}

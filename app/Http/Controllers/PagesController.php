@@ -262,7 +262,7 @@ class PagesController extends Controller
                     $inputId = $value;
                 } else {
                     $checkId = $this->tagModel->select('id')
-                                ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                                ->where(\DB::raw('name'),'like',"".strtolower($value)."")->first();
                     if (count($checkId)) {
                         $inputId = $checkId;
                     } else {
