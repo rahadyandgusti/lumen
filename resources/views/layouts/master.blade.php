@@ -264,7 +264,7 @@ crossorigin="anonymous"></script>
     				var tags = '';
     				$.each(data.tags, function(i,v){
     					tags += '<a class="red-text text-lighten-2" '+
-		                        'href="{{ url('tag') }}/'+v.tag.name+'">'+
+		                        'href="{{ url('tags') }}/'+v.tag.name+'">'+
 		                            '#'+v.tag.name+
 		                        '</a>';
     				})
