@@ -239,12 +239,12 @@ crossorigin="anonymous"></script>
     	$('.select_material').material_select();
     	$(".button-collapse").sideNav({
     		edge: 'right',
-    		menuWidth: '50%',
+    		menuWidth: '70%',
     		closeOnClick: true,
     		onOpen: function(el) {
     			$('.preview-content').hide();
+    			$('.preview-loader').find('.preloader-wrapper').addClass('active');
     			$('.preview-loader').show();
-    			$('.preview-loader').find('preloader-wrapper').addClass('active');
 
     			var id = $(this).data('id');
     			console.log(id);
@@ -271,7 +271,7 @@ crossorigin="anonymous"></script>
     				el.find('.tags').html(tags);
 
 	    			$('.preview-content').show();
-	    			$('.preview-loader').find('preloader-wrapper').removeClass('active');
+	    			$('.preview-loader').find('.preloader-wrapper').removeClass('active');
     				$('.preview-loader').hide();
     			});
     		},
