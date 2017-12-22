@@ -276,7 +276,7 @@ crossorigin="anonymous"></script>
     			});
     		},
     		onClose: function(el) {
-    			window.history.pushState("", "", "{{\Request::url()}}");
+    			window.history.pushState("", "", "{{\Request::fullUrl()}}");
     		}
     	});
     	// $('ul.tabs').tabs({'swipeable':true});

@@ -73,3 +73,6 @@ text-transform:none;
 #preview.side-nav li{
 	line-height: inherit;
 }
+#preview.side-nav li .title{
+	text-transform: capitalize;
+}
