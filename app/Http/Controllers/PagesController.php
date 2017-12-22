@@ -169,18 +169,10 @@ class PagesController extends Controller
             ]);
         }
 
-        $tags = $this->tagModel
-                        ->withCount('pages')
-                        ->whereHas('pages')
-                        ->orderBy('id','desc')->get()->take(50);
-
-        $sumTagCount = $tags->sum('pages_count');
         return view($this->folder . '.show', [
             'title' => $this->title,
             'url' => $this->url,
             'data' => $data,
-            'tags' => $tags,
-            'sumTagCount' => $sumTagCount,
         ]);
     }
 
@@ -352,12 +344,7 @@ class PagesController extends Controller
                         ->where('id', 0)
                         ->paginate(15);
         }
-        // return $data;
-        $data['tags'] = $this->tagModel
-                        ->withCount('pages')
-                        ->whereHas('pages')
-                        ->orderBy('id','desc')->get()->take(50);
-        $data['sumTagCount'] = $data['tags']->sum('pages_count');
+
         return view($this->folder . '.search', $data);
     }
 
@@ -368,11 +355,6 @@ class PagesController extends Controller
                         })
                         ->paginate(15);
         $data['tag'] = $tag;
-        $data['tags'] = $this->tagModel
-                        ->withCount('pages')
-                        ->whereHas('pages')
-                        ->orderBy('id','desc')->get()->take(50);
-        $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view($this->folder . '.tags', $data);
     }
 
@@ -391,5 +373,9 @@ class PagesController extends Controller
         }
 
         return view($this->folder . '.search', $data);
+    }
+
+    public function getData($id) {
+        return $this->model->with('createduser:id,name','tags.tag:id,name')->find($id)->toArray();
     }
 }

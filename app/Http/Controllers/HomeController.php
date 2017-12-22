@@ -44,11 +44,6 @@ class HomeController extends Controller
                         ->select('id', 'slug', 'title','created_id')
                         ->with('tags.tag:id,name','createduser:id,name')
                         ->orderBy('hit','desc')->get()->take(6);
-        $data['tags'] = $this->tag
-                        ->withCount('pages')
-                        ->whereHas('pages')
-                        ->orderBy('id','desc')->get()->take(50);
-        $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view('home',$data);
     }
 
@@ -72,12 +67,6 @@ class HomeController extends Controller
                         ->where('created_id', $user->id)
                         ->with('tags.tag:id,name')
                         ->orderBy('id','desc')->get()->take(6);
-        $data['tags'] = $this->tag
-                        ->whereHas('pages.page', function($query) use ($user){
-                            $query->where('created_id', $user->id);
-                        })
-                        ->orderBy('id','desc')->get()->take(50);
-        $data['sumTagCount'] = $data['tags']->sum('pages_count');
         return view('pages.show-draft',$data);
     }
 

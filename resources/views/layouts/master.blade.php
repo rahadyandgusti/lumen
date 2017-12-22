@@ -132,11 +132,47 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="container">
-				© 2017 Copyright
+				© 2018 Copyright
 				<!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
 			</div>
 		</div>
     </footer>
+    <ul id="preview" class="side-nav">
+	    <li><a href="#!" onclick="return false;"><i class="material-icons">arrow_forward</i></a></li>
+	    <li>
+		    <img src="images/office.jpg" class="image-header" width="100%">
+	    </li>
+	    <li>
+	    	<div class="row">
+		    	<div class="col s12">
+		    		<a href="" class="title-url">
+		    			<h4 class="title">Title</h4>
+		    		</a>
+		    	</div>
+		    	<div class="col s12">
+		    		<span class="grey-text created">by Admin</span>
+		    	</div>
+	    	</div>
+	    </li>
+	    <!-- <li><div class="divider"></div></li> -->
+	    <li>
+	    	<div class="row">
+		    	<div class="col s12">
+		    		<div class="content">Content</div>
+		    	</div>
+		    </div>
+	    </li>
+	    <li>
+	    	<div class="row">
+		    	<div class="col s12 tags">
+		    		<a class="red-text text-lighten-2" 
+                        href="#">
+                            #tags
+                        </a>
+		    	</div>
+		    </div>
+	    </li>
+	</ul>
 </body>
 
 <script
@@ -154,6 +190,41 @@ crossorigin="anonymous"></script>
 		$(".dropdown-button").dropdown();
     	$('.materialboxed').materialbox();
     	$('.select_material').material_select();
+    	$(".button-collapse").sideNav({
+    		edge: 'right',
+    		menuWidth: '50%',
+    		closeOnClick: true,
+    		onOpen: function(el) {
+    			var id = $(this).data('id');
+    			console.log(id);
+    			var url = '{{ url("page/getdata") }}/'+id;
+    			$.get(url, function(data){
+    				window.history.pushState("", "", "{{url('/')}}" +  "/page/"+data.slug);
+    				if (data.image_header && data.image_header != '-') {
+    					el.find('.image-header').closest('li').show();
+    					el.find('.image-header').attr('src','{{ url("image/content/header") }}/'+data.image_header);
+    				} else {
+    					el.find('.image-header').closest('li').hide();
+    				}
+    				el.find('.title-url').attr('href','{{ url("page") }}/'+data.slug);
+    				el.find('.title').html(data.title);
+    				el.find('.content').html(data.content);
+    				el.find('.created').html('by '+data.createduser.name);
+    				var tags = '';
+    				$.each(data.tags, function(i,v){
+    					tags += '<a class="red-text text-lighten-2" '+
+		                        'href="{{ url('tag') }}/'+v.tag.name+'">'+
+		                            '#'+v.tag.name+
+		                        '</a>';
+    				})
+    				el.find('.tags').html(tags);
+    			});
+    		},
+    		onClose: function(el) {
+    			window.history.pushState("", "", "{{\Request::url()}}");
+    		}
+    	});
+    	// $('ul.tabs').tabs({'swipeable':true});
 
 		// $('input.autocomplete').autocomplete({
 		// 	data: {

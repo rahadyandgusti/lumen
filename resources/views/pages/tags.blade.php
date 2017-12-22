@@ -49,7 +49,7 @@
               </div>
               <div class="row">
                   <div class="col s12">
-                    @include('partialView.data-tag',['data' => $tags])
+                    @include('partialView.data-tag')
                   </div>
               </div>
             </div>

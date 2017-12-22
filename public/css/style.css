@@ -70,3 +70,6 @@ text-transform:none;
 .card-panel{
 	padding: 15px;
 }
+#preview.side-nav li{
+	line-height: inherit;
+}

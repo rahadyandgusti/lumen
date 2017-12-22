@@ -1,4 +1,8 @@
-@if(count($tags))
+@php
+$data = \TagHelper::getTagData();
+$tags = $data['tags'];
+$sumTagCount = $data['total'];
+@endphp
 @foreach ($tags as $tag)
   <a class="btn-flat btn-small btn-tags-custom waves-effect waves-light
     font{{round(($tag->pages_count*10)/($sumTagCount?$sumTagCount:1))}}
@@ -7,4 +11,3 @@
     #{{$tag->name}}
   </a>
 @endforeach
-@endif

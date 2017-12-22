@@ -19,11 +19,11 @@
     <div class="row">
         <div class="col m6 offset-m3">
             <div class="card">
-                <div class="card-image">
+                <!-- <div class="card-image">
                     <img src="http://materializecss.com/images/sample-1.jpg">
-                    <span class="card-title">Login</span>
-                </div>
+                </div> -->
                 <div class="card-content">
+                    <span class="card-title">Login</span>
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 

@@ -92,7 +92,7 @@
                 </div>
                 <div class="row margin-bottom-5">
                     <div class="col s12">
-                        @include('partialView.data-tag',['data' => $tags])
+                        @include('partialView.data-tag')
                     </div>
                 </div>
             </div>
