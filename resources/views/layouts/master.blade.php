@@ -139,6 +139,52 @@
     </footer>
     <ul id="preview" class="side-nav">
 	    <li><a href="#!" onclick="return false;"><i class="material-icons">arrow_forward</i></a></li>
+	    <div class="preview-loader">
+	    <li class="center-align">
+	    	<div class="preloader-wrapper small">
+	    	  <div class="spinner-layer spinner-blue">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-red">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-yellow">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-green">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+		    </div>
+	    </li>
+	    </div>
+	    <div class="preview-content">
 	    <li>
 		    <img src="images/office.jpg" class="image-header" width="100%">
 	    </li>
@@ -172,6 +218,7 @@
 		    	</div>
 		    </div>
 	    </li>
+	    </div>
 	</ul>
 </body>
 
@@ -195,6 +242,10 @@ crossorigin="anonymous"></script>
     		menuWidth: '50%',
     		closeOnClick: true,
     		onOpen: function(el) {
+    			$('.preview-content').hide();
+    			$('.preview-loader').show();
+    			$('.preview-loader').find('preloader-wrapper').addClass('active');
+
     			var id = $(this).data('id');
     			console.log(id);
     			var url = '{{ url("page/getdata") }}/'+id;
@@ -218,6 +269,10 @@ crossorigin="anonymous"></script>
 		                        '</a>';
     				})
     				el.find('.tags').html(tags);
+
+	    			$('.preview-content').show();
+	    			$('.preview-loader').find('preloader-wrapper').removeClass('active');
+    				$('.preview-loader').hide();
     			});
     		},
     		onClose: function(el) {
