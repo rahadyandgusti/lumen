@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.0.6/dist/sweetalert2.min.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-    <link href="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('plugin/ckeditor/plugins/prism/lib/prism/prism_patched.min.js') }}" rel="stylesheet"> -->
     <!-- Styles -->
     @yield('styles')
     <link rel="stylesheet" href="{!! asset('css/style.css') !!}"/>
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"> -->
+    <link href="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css') }}" rel="stylesheet">
 </head>
 <body>
 	<div class="navbar-fixed">
@@ -231,8 +233,10 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.0.6/dist/sweetalert2.all.min.js"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
 <script src="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
-<script src="{{ asset('plugin/ckeditor/plugins/syntaxhighlight/dialogs/syntaxhighlight.js') }}"></script>
+<!-- <script src="{{ asset('plugin/ckeditor/plugins/prism/lib/prism/prism_patched.min.js') }}"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script> -->
 
 <!-- <script src="{{ asset('js/app.js') }}"></script> -->

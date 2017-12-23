@@ -11,138 +11,138 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 }
 
 .hljs,
-.hljs-tag,
-.css .hljs-rules,
-.css .hljs-value,
-.css .hljs-function
-.hljs-preprocessor,
-.hljs-pragma {
+.tag,
+.css .rules,
+.css .value,
+.css .function
+.preprocessor,
+.pragma {
   color: #f8f8f2;
 }
 
-.hljs-strongemphasis,
-.hljs-strong,
-.hljs-emphasis {
+.strongemphasis,
+.strong,
+.emphasis {
   color: #a8a8a2;
 }
 
-.hljs-bullet,
-.hljs-blockquote,
-.hljs-horizontal_rule,
-.hljs-number,
-.hljs-regexp,
-.alias .hljs-keyword,
-.hljs-literal,
-.hljs-hexcolor {
+.bullet,
+.blockquote,
+.horizontal_rule,
+.number,
+.regexp,
+.alias .keyword,
+.literal,
+.hexcolor {
   color: #ae81ff;
 }
 
-.hljs-tag .hljs-value,
-.hljs-code,
-.hljs-title,
-.css .hljs-class,
-.hljs-class .hljs-title:last-child {
+.tag .value,
+.code,
+.title,
+.css .class,
+.class .title:last-child {
   color: #a6e22e;
 }
 
-.hljs-link_url {
+.link_url {
   font-size: 80%;
 }
 
-.hljs-strong,
-.hljs-strongemphasis {
+.strong,
+.strongemphasis {
   font-weight: bold;
 }
 
-.hljs-emphasis,
-.hljs-strongemphasis,
-.hljs-class .hljs-title:last-child {
+.emphasis,
+.strongemphasis,
+.class .title:last-child {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-function,
-.hljs-change,
-.hljs-winutils,
-.hljs-flow,
-.lisp .hljs-title,
-.clojure .hljs-built_in,
-.nginx .hljs-title,
-.tex .hljs-special,
-.hljs-header,
-.hljs-attribute,
-.hljs-symbol,
-.hljs-symbol .hljs-string,
-.hljs-tag .hljs-title,
-.hljs-value,
-.alias .hljs-keyword:first-child,
-.css .hljs-tag,
+.keyword,
+.function,
+.change,
+.winutils,
+.flow,
+.lisp .title,
+.clojure .built_in,
+.nginx .title,
+.tex .special,
+.header,
+.attribute,
+.symbol,
+.symbol .string,
+.tag .title,
+.value,
+.alias .keyword:first-child,
+.css .tag,
 .css .unit,
-.css .hljs-important {
+.css .important {
   color: #F92672;
 }
 
-.hljs-function .hljs-keyword,
-.hljs-class .hljs-keyword:first-child,
-.hljs-constant,
-.css .hljs-attribute {
+.function .keyword,
+.class .keyword:first-child,
+.constant,
+.css .attribute {
   color: #66d9ef;
 }
 
-.hljs-variable,
-.hljs-params,
-.hljs-class .hljs-title {
+.variable,
+.params,
+.class .title {
   color: #f8f8f2;
 }
 
-.hljs-string,
-.css .hljs-id,
-.hljs-subst,
-.haskell .hljs-type,
-.ruby .hljs-class .hljs-parent,
-.hljs-built_in,
-.sql .hljs-aggregate,
-.django .hljs-template_tag,
-.django .hljs-variable,
-.smalltalk .hljs-class,
-.django .hljs-filter .hljs-argument,
-.smalltalk .hljs-localvars,
-.smalltalk .hljs-array,
-.hljs-attr_selector,
-.hljs-pseudo,
-.hljs-addition,
-.hljs-stream,
-.hljs-envvar,
-.apache .hljs-tag,
-.apache .hljs-cbracket,
-.tex .hljs-command,
-.hljs-prompt,
-.hljs-link_label,
-.hljs-link_url {
+.string,
+.css .id,
+.subst,
+.haskell .type,
+.ruby .class .parent,
+.built_in,
+.sql .aggregate,
+.django .template_tag,
+.django .variable,
+.smalltalk .class,
+.django .filter .argument,
+.smalltalk .localvars,
+.smalltalk .array,
+.attr_selector,
+.pseudo,
+.addition,
+.stream,
+.envvar,
+.apache .tag,
+.apache .cbracket,
+.tex .command,
+.prompt,
+.link_label,
+.link_url {
   color: #e6db74;
 }
 
-.hljs-comment,
-.hljs-javadoc,
-.java .hljs-annotation,
-.python .hljs-decorator,
-.hljs-template_comment,
-.hljs-pi,
-.hljs-doctype,
-.hljs-deletion,
-.hljs-shebang,
-.apache .hljs-sqbracket,
-.tex .hljs-formula {
+.comment,
+.javadoc,
+.java .annotation,
+.python .decorator,
+.template_comment,
+.pi,
+.doctype,
+.deletion,
+.shebang,
+.apache .sqbracket,
+.tex .formula {
   color: #75715e;
 }
 
 .coffeescript .javascript,
 .javascript .xml,
-.tex .hljs-formula,
+.tex .formula,
 .xml .javascript,
 .xml .vbscript,
 .xml .css,
-.xml .hljs-cdata,
+.xml .cdata,
 .xml .php,
 .php .xml {
   opacity: 0.5;

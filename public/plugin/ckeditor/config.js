@@ -31,6 +31,10 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
 
 	// Dialog windows are also simplified.
+	// config.extraPlugins = "syntaxhighlight";
+	
+	config.extraPlugins = "lineutils,widget,codesnippet,prism";
+
 	config.removeDialogTabs = 'link:advanced';
 
 	config.codeSnippet_theme = 'monokai_sublime';

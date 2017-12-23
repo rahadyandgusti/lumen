@@ -57,7 +57,7 @@
                             <i class="material-icons">close</i>
                         </button>
                     </div>
-                    <div id="image-section" style="display: {{ isset($data) && $data->image_header?'':'none' }}" onmouseover="toggleBtn('#btn-upload','over')" onmouseleave="toggleBtn('#btn-upload','leave')">
+                    <div id="image-section" style="display: {{ isset($data) && $data->image_header?'':'none' }}">
                     <div class="col s12">
                         <div id="image-preview"></div>
                     </div>
@@ -249,6 +249,14 @@
 
     $(document).on('click', '#btn-upload', function(e){
         $('#image-upload').click();
+    });
+
+    $(document).on('mouseover', '#image-section', function(e){
+        toggleBtn('#btn-upload','over');
+    });
+
+    $(document).on('mouseleave', '#image-section', function(e){
+        toggleBtn('#btn-upload','leave');
     });
 
     function toggleHeader(param){
@@ -465,7 +473,7 @@
     CKEDITOR.inline( content, {
         // Allow some non-standard markup that we used in the introduction.
         // extraAllowedContent: 'a(documentation);abbr[title];code',
-        // removePlugins: 'syntaxhighlight',
+        removePlugins: 'syntaxhighlight',
         // extraPlugins: 'sourcedialog',
         // Show toolbar on startup (optional).
         // startupFocus: true
