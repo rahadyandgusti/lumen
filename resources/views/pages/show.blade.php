@@ -1,12 +1,16 @@
 @extends('layouts.master')
 
 @section('styles')
+<link href="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css') }}" rel="stylesheet">
 <style type="text/css">
     .btn-edit {
         position: absolute;
     }
     #content, #title {
         padding: 5px;
+    }
+    span.cke_reset.cke_widget_drag_handler_container, img.cke_reset.cke_widget_mask{
+        display: none !important;
     }
 </style>
 @stop
@@ -107,5 +111,6 @@
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
+<script src="{{ asset('plugin/ckeditor/plugins/syntaxhighlight/dialogs/syntaxhighlight.js') }}"></script>
 @stop
