@@ -235,7 +235,7 @@ crossorigin="anonymous"></script>
 
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
 
-<script src="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
+
 <!-- <script src="{{ asset('plugin/ckeditor/plugins/prism/lib/prism/prism_patched.min.js') }}"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script> -->
 

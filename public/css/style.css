@@ -77,6 +77,6 @@ text-transform:none;
 #preview.side-nav li .title{
 	text-transform: capitalize;
 }
-span.cke_reset.cke_widget_drag_handler_container, img.cke_reset.cke_widget_mask{
+/*span.cke_reset.cke_widget_drag_handler_container, img.cke_reset.cke_widget_mask{
     display: none !important;
-}
+}*/

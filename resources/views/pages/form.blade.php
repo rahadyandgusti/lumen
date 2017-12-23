@@ -165,6 +165,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js"></script>
 <!-- <script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script> -->
+<script src="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
 <script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
 
 <script type="text/javascript">
@@ -312,6 +313,10 @@
        return tmp.textContent || tmp.innerText || "";
     }
 
+    function removeCKEReset(){
+       $('.cke_reset').remove();
+    }
+
     document.getElementById("image-upload").addEventListener("change", readFile);
 
     $(document).on('keypress', '#title', function(e){
@@ -329,6 +334,7 @@
     });
     
     $(document).on('click', '.btn-save', function(){
+        removeCKEReset();
         var token = $('meta[name=csrf-token]').attr('content');
         var tags = $('#tags').val();
         var status = $('#status').val();
