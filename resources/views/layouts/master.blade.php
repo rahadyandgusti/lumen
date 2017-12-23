@@ -223,6 +223,7 @@
 	    </li>
 	    </div>
 	</ul>
+	<script id="dsq-count-scr" src="//merepo.disqus.com/count.js" async></script>
 </body>
 
 <script
