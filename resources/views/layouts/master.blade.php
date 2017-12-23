@@ -233,7 +233,7 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.0.6/dist/sweetalert2.all.min.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
 
 <script src="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
 <!-- <script src="{{ asset('plugin/ckeditor/plugins/prism/lib/prism/prism_patched.min.js') }}"></script> -->

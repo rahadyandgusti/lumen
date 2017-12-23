@@ -32,15 +32,22 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Dialog windows are also simplified.
 	// config.extraPlugins = "syntaxhighlight";
-	
+
 	config.extraPlugins = "lineutils,widget,codesnippet,prism";
 
 	config.removeDialogTabs = 'link:advanced';
 
 	config.codeSnippet_theme = 'monokai_sublime';
 
-	config.codeSnippet_languages = {
-		javascript: 'JavaScript',
-    	php: 'PHP'
-    };
+	// config.codeSnippet_languages = {
+	// 	text: 'Text only',
+	// 	html: 'HTML',
+	// 	javascript: 'JavaScript',
+ //    	php: 'PHP',
+ //    	xml: 'XML'
+	// 	http: 'HTTP',
+ //    	c: 'C',
+	// 	csharp: 'C#',
+	// 	cpp: 'C++',
+ //    };
 };
