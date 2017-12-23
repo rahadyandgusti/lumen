@@ -8,6 +8,6 @@ $sumTagCount = $data['total'];
     font{{round(($tag->pages_count*10)/($sumTagCount?$sumTagCount:1))}}
     red-text text-lighten-2" 
   href="{{ route('page.tag', $tag->name) }}">
-    #{{$tag->name}}
+    #{{$tag->name.'|'.$tag->pages_count}}
   </a>
 @endforeach
