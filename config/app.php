@@ -170,6 +170,7 @@ return [
         App\Providers\HelpersServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        Spatie\Sitemap\SitemapServiceProvider::class,
         /*
          * Application Service Providers...
          */
