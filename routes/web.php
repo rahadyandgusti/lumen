@@ -15,7 +15,6 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/upload', 'HomeController@upload')->name('upload');
 
 Route::group(['middleware'=>['auth']], function () {
 	Route::get('/draft', 'HomeController@draft')->name('draft');
