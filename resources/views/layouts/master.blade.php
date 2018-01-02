@@ -21,6 +21,13 @@
     <link rel="stylesheet" href="{!! asset('css/style.css') !!}"/>
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"> -->
     <link href="{{ asset('plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css') }}" rel="stylesheet">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7291012637010239",
+    enable_page_level_ads: true
+  });
+</script>
 </head>
 <body>
 	<div class="navbar-fixed">
