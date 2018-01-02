@@ -102,7 +102,7 @@ class PagesController extends Controller
                 } else {
                     $inputId = 0;
                     $checkId = $this->tagModel->select('id')
-                                ->where(\DB::raw('name'),'like',"%".strtolower($value)."%")->first();
+                                ->where('name','like',"".strtolower($value)."")->first();
                     if (count($checkId)) {
                         $inputId = $checkId;
                     } else {
@@ -333,7 +333,7 @@ class PagesController extends Controller
         if($request->get('keyword')){
             $data['data'] = $this->model
                         ->where('status', 'publish')
-                        ->select('id', 'slug', 'title','created_id')
+                        ->select('id', 'slug', 'title', 'created_id')
                         ->groupBy('id')
                         ->search($request->get('keyword'), null, true)
                         ->with('tags')
