@@ -99,7 +99,7 @@
         </div>
 
         <div class="row">
-            <div class="col m12">
+            <div class="col s12">
                 <div id="disqus_thread"></div>
                 <script>
 

@@ -12,19 +12,13 @@
           </div>
         </div>
         <div class="row">
-            <div class="col m6 hide-on-small-only">
-                <ul class="tabs">
-                    <li class="tab col s6"><a class="active black-text waves-effect waves-green" href="#view-data">Most Viewed</a></li>
-                    <li class="tab col s6"><a class="black-text waves-effect waves-green" href="#add-data">New Data Added</a></li>
-                </ul>
-            </div>
-            <div class="col s12 m6">
+            <div class="col s12 m7 push-m5">
               @include('partialView.search')
             </div>
-            <div class="col s12 hide-on-med-and-up">
+            <div class="col s12 m5 pull-m7">
                 <ul class="tabs">
                     <li class="tab col s6"><a class="active black-text waves-effect waves-green" href="#view-data">Most Viewed</a></li>
-                    <li class="tab col s6"><a class="black-text waves-effect waves-green" href="#add-data">New Data Added</a></li>
+                    <li class="tab col s6"><a class="black-text waves-effect waves-green" href="#add-data">New Data</a></li>
                 </ul>
             </div>
         </div>
