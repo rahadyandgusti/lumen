@@ -37,7 +37,6 @@
 
 				<ul class="right">
 				@guest
-					<li><a href="{{ url('login') }}" class=" black-text">login</a></li>
 				@else
 					<li><a class="dropdown-button black-text" href="#!" data-activates="profile">
 						<i class="material-icons left">face</i>
@@ -84,6 +83,16 @@
 	      			href="{{ route('home') }}"
 	      		>
 	      			<i class="material-icons">home</i>
+	      		</a>
+	      	</li>
+	      	<li>
+	      		<a class="btn-floating blue tooltipped" 
+	      			data-position="left" 
+	      			data-delay="50" 
+	      			data-tooltip="Lets go to forum page" 
+	      			href="{{ env('FORUM_APP_URL', 'https://forum.merepo.tk') }}"
+	      		>
+	      			<i class="material-icons">forum</i>
 	      		</a>
 	      	</li>
 	      	@guest

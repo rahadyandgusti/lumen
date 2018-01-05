@@ -480,6 +480,7 @@
         // Allow some non-standard markup that we used in the introduction.
         // extraAllowedContent: 'a(documentation);abbr[title];code',
         removePlugins: 'syntaxhighlight',
+        extraPlugins : 'html5video,youtube',
         // extraPlugins: 'sourcedialog',
         // Show toolbar on startup (optional).
         // startupFocus: true
