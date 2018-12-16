@@ -95,7 +95,7 @@
                         </span>
                     </div>
                     <div class="col s12">
-                        <div id="content" style="min-height:100px">
+                        <div id="content" contenteditable=true style="min-height:100px">
                         @if(isset($data))
                             {!! $data->content !!}
                         @else
@@ -472,18 +472,18 @@
     var title = document.getElementById( 'title' );
     var content = document.getElementById( 'content' );
         // title.setAttribute( 'contenteditable', true );
-        content.setAttribute( 'contenteditable', true );
-    CKEDITOR.disableAutoInline = true;
+        // content.setAttribute( 'contenteditable', true );
+    // CKEDITOR.disableAutoInline = true;
 
     // CKEDITOR.inline( 'content')
-    CKEDITOR.inline( content, {
+    // CKEDITOR.inline( content, {
         // Allow some non-standard markup that we used in the introduction.
         // extraAllowedContent: 'a(documentation);abbr[title];code',
-        removePlugins: 'syntaxhighlight',
-        extraPlugins : 'html5video,youtube',
+        // removePlugins: 'syntaxhighlight',
+        // extraPlugins : 'html5video,youtube,codesnippetgeshi',
         // extraPlugins: 'sourcedialog',
         // Show toolbar on startup (optional).
         // startupFocus: true
-    } );
+    // } );
 </script>
 @stop
