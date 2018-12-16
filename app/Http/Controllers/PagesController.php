@@ -331,11 +331,24 @@ class PagesController extends Controller
         \SEOMeta::addKeyword([$request->get('keyword')]); 
 
         if($request->get('keyword')){
+            $keyWord = $request->get('keyword');
             $data['data'] = $this->model
                         ->where('status', 'publish')
                         ->select('id', 'slug', 'title', 'created_id')
                         ->groupBy('id')
-                        ->search($request->get('keyword'), null, true)
+                        ->where(function($query) use ($keyWord){
+                            $tmpKeyWoard = explode(' ',$keyWord);
+                            foreach ($tmpKeyWoard as $key => $value) {
+                                if($key==0)
+                                    $query->where('title','ilike','%'.$value.'%');
+                                else
+                                    $query->orWhere('title','ilike','%'.$value.'%');
+
+                                $query->orWhereHas('tags.tag',function($queryTag)use($value){
+                                    $queryTag->where('name','ilike','%'.$value.'%');
+                                });
+                            }
+                        })
                         ->with('tags')
                         ->with('createduser')
                         ->paginate(15);
