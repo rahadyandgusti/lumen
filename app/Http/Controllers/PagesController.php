@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BaseController;
+
 use Illuminate\Http\Request as RequestDefault;
 use App\Models\PagesModel;
 use App\Models\TagPagesModel;
 use App\Models\TagsModel;
 use App\Http\Requests\PagesRequest as Request;
 
-class PagesController extends Controller
+class PagesController extends BaseController
 {
     protected $title = "Pages";
     protected $url = "page";
@@ -169,11 +171,12 @@ class PagesController extends Controller
             ]);
         }
 
-        return view($this->folder . '.show', [
-            'title' => $this->title,
-            'url' => $this->url,
-            'data' => $data,
-        ]);
+        $dataView = $this->getFunctionData();
+        $dataView['title'] = $this->title;
+        $dataView['url'] = $this->url;
+        $dataView['data'] = $data;
+
+        return view($this->folder . '.show', $dataView);
     }
 
     /**

@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\BaseController;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Request as RequestDefault;
 use App\Models\PagesModel;
 use App\Models\TagsModel;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     protected $title = "Pages";
     protected $url = "page";
@@ -84,13 +85,6 @@ class HomeController extends Controller
         }
 
         return view($this->folder . '.search', $data);
-    }
-
-    private function getFunctionData(){
-        $getUser = \Auth::user();
-        $data['user'] = $getUser?str_replace(' ','_',strtolower($getUser->name)):'user';
-        $data['path'] = '/home/search '.($getUser?'#':'$');
-        return $data;
     }
 
     /**
