@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request as RequestDefault;
 use App\Models\PagesModel;
 use App\Models\TagsModel;
 
 class HomeController extends Controller
 {
+    protected $title = "Pages";
+    protected $url = "page";
+    protected $folder = "pages-new";
     /**
      * Create a new controller instance.
      *
@@ -34,17 +38,59 @@ class HomeController extends Controller
         \SEO::opengraph()->addProperty('type', 'articles');
         \SEO::opengraph()->setSiteName(config('app.name')); 
 
-        // $data['new'] = $this->page
-        //                 ->where('status', 'publish')
-        //                 ->select('id', 'slug', 'title','created_id')
-        //                 ->with('tags.tag:id,name','createduser:id,name')
-        //                 ->orderBy('id','desc')->get()->take(6);
-        // $data['views'] = $this->page
-        //                 ->where('status', 'publish')
-        //                 ->select('id', 'slug', 'title','created_id')
-        //                 ->with('tags.tag:id,name','createduser:id,name')
-        //                 ->orderBy('hit','desc')->get()->take(6);
-        return view('home');
+        $getUser = \Auth::user();
+        $data['user'] = $getUser?str_replace(' ','_',strtolower($getUser->name)):'user';
+        $data['path'] = '/home/search '.($getUser?'#':'$');
+        return view('home-new', $data);
+    }
+
+    public function search(RequestDefault $request) {
+        \SEO::setTitle('Pencarian');
+        \SEO::setDescription('List pencarian content');
+        \SEO::opengraph()->setUrl(\Request::url());
+        \SEO::setCanonical(\Request::url());
+        \SEO::opengraph()->addProperty('type', 'articles');
+        \SEO::opengraph()->setSiteName(config('app.name')); 
+        \SEOMeta::addKeyword([$request->get('keyword')]);
+
+        $data = $this->getFunctionData(); 
+
+        if($request->get('keyword')){
+            $keyWord = $request->get('keyword');
+            $data['data'] = $this->page
+                        ->where('status', 'publish')
+                        ->select('id', 'slug', 'title', 'created_id')
+                        ->groupBy('id')
+                        ->where(function($query) use ($keyWord){
+                            $tmpKeyWoard = explode(' ',$keyWord);
+                            foreach ($tmpKeyWoard as $key => $value) {
+                                if($key==0)
+                                    $query->where('title','ilike','%'.$value.'%');
+                                else
+                                    $query->orWhere('title','ilike','%'.$value.'%');
+
+                                $query->orWhereHas('tags.tag',function($queryTag)use($value){
+                                    $queryTag->where('name','ilike','%'.$value.'%');
+                                });
+                            }
+                        })
+                        ->with('tags')
+                        ->with('createduser')
+                        ->paginate(15);
+        } else {
+            $data['data'] = $this->page
+                        ->where('id', 0)
+                        ->paginate(15);
+        }
+
+        return view($this->folder . '.search', $data);
+    }
+
+    private function getFunctionData(){
+        $getUser = \Auth::user();
+        $data['user'] = $getUser?str_replace(' ','_',strtolower($getUser->name)):'user';
+        $data['path'] = '/home/search '.($getUser?'#':'$');
+        return $data;
     }
 
     /**

@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('layouts.master-new')
 
 @section('styles')
 @stop

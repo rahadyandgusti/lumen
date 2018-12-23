@@ -1,15 +1,16 @@
-<div class="row no-margin">
-    <div class="col s12 " >
-      <div class="row no-margin" id="topbarsearch">
-          <form action="{{ route('search') }}" method="get">
-          <div class="input-field col s6 s12 black-text">
-            <i class="black-text material-icons prefix">search</i>
-            <input type="text" placeholder="search" 
-              class="black-text search-input" name="keyword" 
-              value="{{ \Request::get('keyword') }}" 
-            >
-          </div>
-          </form>
+<div class="row">
+  <div class="col s12">
+    <form action="{{ route('search') }}" method="get">
+      <div class="file-field input-field">
+        <div class="btn btn-flat disabled no-padding">
+          {{$user}}&#64;{{ config('app.name') }} {{$path}} 
         </div>
-    </div>
+        <div class="file-path-wrapper">
+          <input type="text" placeholder="search" 
+              class="black-text search-input" name="keyword" 
+              value="{{ \Request::get('keyword') }}" >
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
