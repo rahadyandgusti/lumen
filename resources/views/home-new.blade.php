@@ -10,7 +10,7 @@
       @include('partialView.search')
     </section>
 
-    <section class="content custom-grey custom-border-top">
+    <section class="content">
     </section>
 
 @endsection
