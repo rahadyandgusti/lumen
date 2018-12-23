@@ -13,7 +13,7 @@
       </div>
     </form>
   </div>
-  <div class="col m12 show-on-small">
+  <div class="col m12 hide-on-med-and-up">
     <form action="{{ route('search') }}" method="get">
       <div class="row">
         <div class="col s12">
