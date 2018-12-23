@@ -15,11 +15,15 @@
   </div>
   <div class="col m12 show-on-small">
     <form action="{{ route('search') }}" method="get">
-      <div class="col m12">
-        <div class="btn btn-flat disabled no-padding">
-          {{$user}}&#64;{{ config('app.name') }} {{$path}} 
+      <div class="row">
+        <div class="col s12">
+          <div class="btn btn-flat disabled no-padding">
+            {{$user}}&#64;{{ config('app.name') }} {{$path}} 
+          </div>
         </div>
-        <div class="col m12">
+      </div>
+      <div class="row">
+        <div class="col s12">
           <input type="text" placeholder="search" 
               class="black-text search-input" name="keyword" 
               value="{{ \Request::get('keyword') }}" >
