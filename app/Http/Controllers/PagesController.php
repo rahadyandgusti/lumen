@@ -12,7 +12,7 @@ class PagesController extends Controller
 {
     protected $title = "Pages";
     protected $url = "page";
-    protected $folder = "pages";
+    protected $folder = "pages-new";
     protected $form;
 
     public function __construct(PagesModel $model,TagPagesModel $tagPageModel,TagsModel $tagModel)
